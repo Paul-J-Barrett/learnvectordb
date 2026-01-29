@@ -1,0 +1,172 @@
+# Vector Database Learning Tool
+
+An educational project for learning PostgreSQL with pgvector through hands-on experimentation. Uses ollama and OpenRouter for generating embeddings and titles from conversation content. 
+
+## Quick Start
+
+```bash
+# Install uv if not already installed
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies
+uv sync
+
+# Start PostgreSQL with pgvector
+./scripts/start-postgres.sh
+
+# Generate sample conversations CSV
+python scripts/generate_conversations.py
+
+# Ingest CSV into database
+uv run python -m vectordb_learn.db.ingest data/conversations.csv
+
+# Run the TUI application
+uv run python -m vectordb_learn.app
+```
+
+## Available Entry Points
+
+| Entry Point | Description |
+|-------------|-------------|
+| `uv run python -m vectordb_learn.app` | Main TUI application |
+| `uv run python -m vectordb_learn.flashcards.main` | Flashcards TUI |
+| `uv run python -m vectordb_learn.flashcards.generator` | Generate flashcards using OpenRouter |
+| `uv run python -m vectordb_learn.db.ingest <csv>` | Ingest CSV data into database |
+
+## Script Reference
+
+| Script | Description |
+|--------|-------------|
+| `./scripts/start-postgres.sh` | Start PostgreSQL with pgvector in a Podman container |
+| `./scripts/stop-postgres.sh` | Stop the PostgreSQL container |
+| `python scripts/generate_conversations.py` | Generate synthetic conversation dataset |
+| `python scripts/run_flashcards.py [csv]` | Run flashcards TUI (optional CSV path)
+
+## Features
+
+- **CSV Ingestion**: Load conversation data with automatic embedding generation
+- **Vector Search**: Search using cosine similarity with explanatory output
+- **Query Debug Panel**: See raw SQL, execution plans, and performance metrics
+- **Index Manager**: Create and compare HNSW and IVFFlat indexes
+- **SQL Playground**: Write and execute custom queries
+- **Full Observability**: OpenTelemetry tracing to Signoz
+- **Flashcards**: Interactive Q&A for learning vector database concepts
+
+## Flashcards Module
+
+Interactive flashcards covering pgvector, Ollama, OpenRouter, pydantic-ai, PostgreSQL, embeddings, and AI concepts.
+
+### Run Flashcards
+
+```bash
+# Run the flashcards TUI
+uv run python -m vectordb_learn.flashcards.main
+
+# Or use the script
+python scripts/run_flashcards.py
+```
+
+### Generate New Flashcards
+
+Requires `OPENROUTER_API_KEY` in `.env`:
+
+```bash
+# Generate 400 flashcards using OpenRouter (Minimax M2.1)
+uv run python -m vectordb_learn.flashcards.generator
+```
+
+### Flashcard Topics
+
+- pgVector operators, indexes, and data types
+- Ollama Python library usage
+- OpenRouter API integration
+- pydantic-ai framework
+- asyncpg and psycopg2 PostgreSQL clients
+- AI embeddings and vector databases
+- PostgreSQL concepts and SQL
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Space` | Show answer / Mark correct |
+| `R` | Random card |
+| `S` | Shuffle deck |
+| `Escape` | Exit |
+
+## Project Structure
+
+```
+vectordb-learn/
+├── scripts/
+│   ├── start-postgres.sh    # Podman container setup
+│   └── generate_conversations.py
+├── src/vectordb_learn/
+│   ├── app.py              # Main TUI application
+│   ├── db/                 # Database operations
+│   ├── embedding/          # Ollama/OpenRouter clients
+│   └── ui/                 # Textual screens and widgets
+└── data/                   # CSV data files
+```
+
+## Learning Topics
+
+This tool covers:
+- Vector embeddings and similarity search
+- pgvector operators and indexes
+- Query optimization and EXPLAIN ANALYZE
+- HNSW vs IVFFlat indexing strategies
+- Hybrid search combining vectors and full-text search
+
+## Requirements
+
+- Python 3.13+
+- Podman (or Docker)
+- Ollama running locally
+- Access to OpenRouter API (optional, for fallback)
+
+
+## Some Example SQL Queries
+
+Fetch 1 conversation
+
+```sql
+SELECT id, username, session_title, embedding, LEFT(session_content, 200) as preview
+FROM conversations
+ORDER BY id ASC
+LIMIT 1;
+```
+
+## UV Notes
+
+# Install uv first
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# Initialize project
+uv init myproject
+cd myproject
+uv venv
+source .venv/bin/activate
+# Add dependencies
+uv add requests pandas numpy
+uv add --dev pytest black ruff mypy
+# Run development commands
+uv run pytest
+uv run black .
+uv lock  # create reproducible lock file
+# CI/CD
+uv sync  # install exact versions from lock file
+Migration from pip/poetry:
+# Import from requirements.txt
+uv add -r requirements.txt
+# Import from poetry (creates pyproject.toml if needed)
+poetry export -f requirements.txt --without-hashes | uv pip install -r -
+Key Takeaways:
+1. Use uv run for reproducible script execution
+2. Use uv lock for production lockfiles
+3. Use uv python install to manage versions
+4. Replace pip-tools: Use uv pip compile for requirements generation
+
+
+## License
+
+MIT

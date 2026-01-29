@@ -1,0 +1,177 @@
+/* Vector Database Learner - Textual Styles */
+
+Screen {
+    background: #1e1e2e;
+    color: #cdd6f4;
+}
+
+.title {
+    text-align: center;
+    color: #89b4fa;
+    font-size: 18;
+    font-weight: bold;
+    margin-bottom: 1;
+}
+
+.subtitle {
+    text-align: center;
+    color: #a6adc8;
+    font-size: 12;
+    margin-bottom: 2;
+}
+
+.section-title {
+    color: #f9e2af;
+    font-weight: bold;
+    margin-top: 1;
+    margin-bottom: 1;
+}
+
+.menu {
+    align: center middle;
+    width: 50;
+    height: auto;
+}
+
+.menu-btn {
+    width: 100%;
+    margin: 0 0 1 0;
+    height: 3;
+}
+
+.quit-btn {
+    margin-top: 2;
+}
+
+.footer {
+    text-align: center;
+    color: #6c7086;
+    font-size: 10;
+    margin-top: 1;
+}
+
+.search-input {
+    width: 70;
+}
+
+.search-btn {
+    width: 15;
+}
+
+.results-area {
+    height: 15;
+    border: solid #89b4fa;
+    padding: 1;
+    overflow-y: auto;
+}
+
+.explanation-area {
+    height: 12;
+    border: solid #f9e2af;
+    padding: 1;
+    overflow-y: auto;
+}
+
+.input-row {
+    margin-top: 1;
+}
+
+.sql-input {
+    width: 100%;
+    font-family: monospace;
+}
+
+.code-area {
+    height: 20;
+    border: solid #a6adc8;
+    padding: 1;
+    font-family: monospace;
+    background: #11111b;
+    color: #a6adc8;
+    overflow-y: auto;
+}
+
+.log-area {
+    height: 15;
+    border: solid #313244;
+    padding: 1;
+    overflow-y: auto;
+}
+
+.info-area {
+    height: 10;
+    border: solid #45475a;
+    padding: 1;
+    overflow-y: auto;
+}
+
+.metrics-area {
+    height: 20;
+    border: solid #89b4fa;
+    padding: 1;
+    overflow-y: auto;
+}
+
+.btn-row {
+    margin-top: 1;
+    margin-bottom: 1;
+}
+
+.nav-row {
+    margin-top: 2;
+}
+
+.help-text {
+    font-size: 11;
+    color: #cdd6f4;
+    overflow-y: auto;
+}
+
+/* Button variants */
+Button.primary {
+    background: #89b4fa;
+    color: #1e1e2e;
+}
+
+Button.success {
+    background: #a6e3a1;
+    color: #1e1e2e;
+}
+
+Button.warning {
+    background: #f9e2af;
+    color: #1e1e2e;
+}
+
+Button.info {
+    background: #89dceb;
+    color: #1e1e2e;
+}
+
+/* Input styling */
+Input {
+    background: #313244;
+    border: solid #45475a;
+    color: #cdd6f4;
+}
+
+Input:focus {
+    border: solid #89b4fa;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1e1e2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #45475a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #585b70;
+}
