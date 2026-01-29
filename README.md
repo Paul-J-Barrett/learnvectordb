@@ -1,6 +1,6 @@
 # Vector Database Learning Tool
 
-An educational project for learning PostgreSQL with pgvector through hands-on experimentation. Uses ollama and OpenRouter for generating embeddings and titles from conversation content. 
+An educational project for learning PostgreSQL with pgvector through hands-on experimentation. Uses ollama and OpenRouter for generating embeddings and titles from conversation content.
 
 ## Building Notes
 This application was built using opencoder and the model MiniMax M2.1. If you have any issues with any component please try to fix and make a PR. Also the generic conversations in the conversations.csv file are just random text they are not meant to be real users, and sessions data. I was building this to understand how I could add chat conversations to a database and then search that database as memory similar to how ChatGPT stores your conversation history to add to new chat sessions.
@@ -8,6 +8,10 @@ This application was built using opencoder and the model MiniMax M2.1. If you ha
 ## Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/Paul-J-Barrett/learnvectordb.git
+cd learnvectordb
+
 # Install uv if not already installed
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -18,7 +22,7 @@ uv sync
 ./scripts/start-postgres.sh
 
 # Generate sample conversations CSV
-python scripts/generate_conversations.py
+uv run python scripts/generate_conversations.py
 
 # Ingest CSV into database
 uv run python -m vectordb_learn.db.ingest data/conversations.csv
@@ -26,10 +30,8 @@ uv run python -m vectordb_learn.db.ingest data/conversations.csv
 # Run the TUI application
 uv run python -m vectordb_learn.app
 
-# start psql interactively on console
+# Start psql interactively
 podman exec -it postgres psql -U postgres -d vectordb
-
-
 ```
 
 ## Available Entry Points
@@ -47,8 +49,8 @@ podman exec -it postgres psql -U postgres -d vectordb
 |--------|-------------|
 | `./scripts/start-postgres.sh` | Start PostgreSQL with pgvector in a Podman container |
 | `./scripts/stop-postgres.sh` | Stop the PostgreSQL container |
-| `python scripts/generate_conversations.py` | Generate synthetic conversation dataset |
-| `python scripts/run_flashcards.py [csv]` | Run flashcards TUI (optional CSV path)
+| `uv run python scripts/generate_conversations.py` | Generate synthetic conversation dataset |
+| `uv run python scripts/run_flashcards.py [csv]` | Run flashcards TUI (optional CSV path) |
 
 ## Features
 
@@ -71,7 +73,7 @@ Interactive flashcards covering pgvector, Ollama, OpenRouter, pydantic-ai, Postg
 uv run python -m vectordb_learn.flashcards.main
 
 # Or use the script
-python scripts/run_flashcards.py
+uv run python scripts/run_flashcards.py
 ```
 
 ### Generate New Flashcards
@@ -105,10 +107,10 @@ uv run python -m vectordb_learn.flashcards.generator
 ## Project Structure
 
 ```
-vectordb-learn/
+learnvectordb/
 ├── scripts/
 │   ├── start-postgres.sh    # Podman container setup
-│   └── generate_conversations.py
+│   ├── generate_conversations.py
 ├── src/vectordb_learn/
 │   ├── app.py              # Main TUI application
 │   ├── db/                 # Database operations
@@ -133,10 +135,9 @@ This tool covers:
 - Ollama running locally
 - Access to OpenRouter API (optional, for fallback)
 
-
 ## Some Example SQL Queries
 
-Fetch 1 conversation
+Fetch 1 conversation:
 
 ```sql
 SELECT id, username, session_title, embedding, LEFT(session_content, 200) as preview
@@ -145,35 +146,15 @@ ORDER BY id ASC
 LIMIT 1;
 ```
 
-## UV Notes
+## UV Quick Reference
 
-# Install uv first
-curl -LsSf https://astral.sh/uv/install.sh | sh
-# Initialize project
-uv init myproject
-cd myproject
-uv venv
-source .venv/bin/activate
-# Add dependencies
-uv add requests pandas numpy
-uv add --dev pytest black ruff mypy
-# Run development commands
-uv run pytest
-uv run black .
-uv lock  # create reproducible lock file
-# CI/CD
-uv sync  # install exact versions from lock file
-Migration from pip/poetry:
-# Import from requirements.txt
-uv add -r requirements.txt
-# Import from poetry (creates pyproject.toml if needed)
-poetry export -f requirements.txt --without-hashes | uv pip install -r -
-Key Takeaways:
-1. Use uv run for reproducible script execution
-2. Use uv lock for production lockfiles
-3. Use uv python install to manage versions
-4. Replace pip-tools: Use uv pip compile for requirements generation
-
+| Command | Description |
+|---------|-------------|
+| `uv sync` | Install exact versions from lock file |
+| `uv lock` | Create reproducible lock file |
+| `uv run python <script>` | Run script with project dependencies |
+| `uv add <package>` | Add a dependency |
+| `uv add --dev <package>` | Add a dev dependency |
 
 ## License
 
