@@ -1,13 +1,13 @@
 """Flashcard TUI application using Textual."""
 
 import asyncio
-import csv
+import json
 import os
 import random
 import sys
 from pathlib import Path
 from textual.app import App, ComposeResult
-from textual.containers import Container, Vertical
+from textual.containers import Container, Horizontal
 from textual.widgets import Button, Static, Label, Log
 from textual.screen import Screen
 from textual.events import Key
@@ -15,6 +15,9 @@ from textual.events import Key
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from dotenv import load_dotenv
+from vectordb_learn.logging import setup_logging
+
+setup_logging()
 
 env_path = Path(__file__).parent.parent.parent / ".env"
 load_dotenv(env_path)
@@ -22,6 +25,8 @@ load_dotenv(env_path)
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 MODEL = "minimax/minimax-m2.1"
+
+DATA_DIR = Path(__file__).parent.parent.parent.parent / "data"
 
 
 async def get_explanation_from_openrouter(question: str, answer: str) -> str:
@@ -70,6 +75,13 @@ Keep it informative but concise (around 200-300 words)."""
         return f"Error getting explanation: {str(e)}"
 
 
+def save_flashcards(flashcards: list[dict]) -> None:
+    """Save flashcards to JSON file."""
+    json_path = DATA_DIR / "flashcards.json"
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump(flashcards, f, indent=2, ensure_ascii=False)
+
+
 class FlashcardScreen(Screen):
     """Flashcard quiz screen."""
     
@@ -81,7 +93,7 @@ class FlashcardScreen(Screen):
         ("escape", "quit", "Quit"),
     ]
     
-    def __init__(self, flashcards: list[tuple[str, str]], **kwargs):
+    def __init__(self, flashcards: list[dict], **kwargs):
         super().__init__(**kwargs)
         self.flashcards = flashcards
         self.current_index = 0
@@ -105,7 +117,7 @@ class FlashcardScreen(Screen):
                 classes="grade-row hidden",
             ),
             Static("", id="explanation", classes="explanation hidden"),
-            Vertical(
+            Horizontal(
                 Button("Next Card", id="next", classes="nav-btn"),
                 Button("Shuffle", id="shuffle", classes="nav-btn"),
                 Button("Random Card", id="random", classes="nav-btn"),
@@ -129,7 +141,9 @@ class FlashcardScreen(Screen):
         if self.current_index >= len(self.flashcards):
             self.current_index = 0
         
-        question, answer = self.flashcards[self.current_index]
+        card = self.flashcards[self.current_index]
+        question = card["question"]
+        answer = card["answer"]
         
         self.query_one("#question", Static).update(f"Q: {question}")
         self.query_one("#answer", Static).update(f"A: {answer}")
@@ -182,7 +196,7 @@ class FlashcardScreen(Screen):
             asyncio.create_task(self.action_explain())
         
         elif button_id == "exit":
-            self.app.pop_screen()
+            self.app.exit()
     
     def on_key(self, event: Key) -> None:
         if event.key == "space":
@@ -207,7 +221,7 @@ class FlashcardScreen(Screen):
             self.update_card()
         
         elif event.key == "escape":
-            self.app.pop_screen()
+            self.app.exit()
     
     def action_show_answer(self) -> None:
         self.show_answer = True
@@ -230,13 +244,26 @@ class FlashcardScreen(Screen):
             self.showing_explanation = False
             return
         
-        question, answer = self.flashcards[self.current_index]
+        card = self.flashcards[self.current_index]
+        question = card["question"]
+        answer = card["answer"]
+        existing_explanation = card.get("explanation", "")
+        
+        if existing_explanation:
+            self.query_one("#explanation", Static).update(f"📖 DETAILED EXPLANATION:\n\n{existing_explanation}")
+            self.query_one("#explanation", Static).remove_class("hidden")
+            self.showing_explanation = True
+            return
+        
         self.query_one("#explanation", Static).update("Getting explanation...")
         self.query_one("#explanation", Static).remove_class("hidden")
         
         explanation = await get_explanation_from_openrouter(question, answer)
         self.query_one("#explanation", Static).update(f"📖 DETAILED EXPLANATION:\n\n{explanation}")
         self.showing_explanation = True
+        
+        self.flashcards[self.current_index]["explanation"] = explanation
+        save_flashcards(self.flashcards)
     
     def action_quit(self) -> None:
         self.app.pop_screen()
@@ -351,28 +378,40 @@ class FlashcardApp(App):
         pass
 
 
-def run_flashcards(csv_path: str | None = None):
+def run_flashcards(json_path: str | None = None):
     """Run the flashcard application."""
-    if csv_path is None:
-        csv_path = str(Path(__file__).parent.parent.parent.parent / "data" / "flashcards.csv")
+    if json_path is None:
+        json_path = str(DATA_DIR / "flashcards.json")
     
-    if not Path(csv_path).exists():
-        print(f"Error: Flashcards file not found at {csv_path}")
-        print("Run 'python -m vectordb_learn.flashcards.generator' first to generate flashcards.")
-        sys.exit(1)
+    if not Path(json_path).exists():
+        csv_path = DATA_DIR / "flashcards.csv"
+        if csv_path.exists():
+            import csv
+            flashcards = []
+            with open(csv_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    flashcards.append({
+                        "question": row.get('question', ''),
+                        "answer": row.get('answer', ''),
+                        "explanation": ""
+                    })
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(flashcards, f, indent=2, ensure_ascii=False)
+        else:
+            print(f"Error: Flashcards file not found at {json_path}")
+            print("Run 'python -m vectordb_learn.flashcards.generator' first to generate flashcards.")
+            sys.exit(1)
     
-    flashcards = []
-    with open(csv_path, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            flashcards.append((row.get('question', ''), row.get('answer', '')))
+    with open(json_path, 'r', encoding='utf-8') as f:
+        flashcards = json.load(f)
     
     if not flashcards:
-        print("Error: No flashcards found in CSV file.")
+        print("Error: No flashcards found in JSON file.")
         sys.exit(1)
     
     print(f"Loaded {len(flashcards)} flashcards.")
-    print("Keyboard shortcuts: Space=Show Answer, R=Random, S=Shuffle, Escape=Exit")
+    print("Keyboard shortcuts: Space=Show Answer, R=Random, S=Shuffle, E=Explain, Escape=Exit")
     print("Starting TUI...")
     
     class MainApp(App):

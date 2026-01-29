@@ -148,6 +148,9 @@ async def explain_query(
     query: str,
 ) -> str:
     """Get EXPLAIN ANALYZE output for a query."""
-    async with pool.acquire() as conn:
-        result = await conn.fetchval(f"EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT) {query}")
-        return result
+    try:
+        async with pool.acquire() as conn:
+            rows = await conn.fetch(f"EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT) {query}")
+            return "\n".join(str(row[0]) for row in rows)
+    except Exception as e:
+        return f"Error: {type(e).__name__}: {e}"

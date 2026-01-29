@@ -8,21 +8,17 @@ Screen {
 .title {
     text-align: center;
     color: #89b4fa;
-    font-size: 18;
-    font-weight: bold;
     margin-bottom: 1;
 }
 
 .subtitle {
     text-align: center;
     color: #a6adc8;
-    font-size: 12;
     margin-bottom: 2;
 }
 
 .section-title {
     color: #f9e2af;
-    font-weight: bold;
     margin-top: 1;
     margin-bottom: 1;
 }
@@ -46,7 +42,6 @@ Screen {
 .footer {
     text-align: center;
     color: #6c7086;
-    font-size: 10;
     margin-top: 1;
 }
 
@@ -78,14 +73,21 @@ Screen {
 
 .sql-input {
     width: 100%;
-    font-family: monospace;
 }
 
 .code-area {
     height: 20;
     border: solid #a6adc8;
     padding: 1;
-    font-family: monospace;
+    background: #11111b;
+    color: #a6adc8;
+    overflow-y: auto;
+}
+
+.code-area-small {
+    height: 5;
+    border: solid #a6adc8;
+    padding: 1;
     background: #11111b;
     color: #a6adc8;
     overflow-y: auto;
@@ -119,31 +121,31 @@ Screen {
 
 .nav-row {
     margin-top: 2;
+    align: center middle;
 }
 
 .help-text {
-    font-size: 11;
     color: #cdd6f4;
     overflow-y: auto;
 }
 
 /* Button variants */
-Button.primary {
+.button--primary {
     background: #89b4fa;
     color: #1e1e2e;
 }
 
-Button.success {
+.button--success {
     background: #a6e3a1;
     color: #1e1e2e;
 }
 
-Button.warning {
+.button--warning {
     background: #f9e2af;
     color: #1e1e2e;
 }
 
-Button.info {
+.button--info {
     background: #89dceb;
     color: #1e1e2e;
 }
@@ -157,21 +159,4 @@ Input {
 
 Input:focus {
     border: solid #89b4fa;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #1e1e2e;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #45475a;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #585b70;
 }

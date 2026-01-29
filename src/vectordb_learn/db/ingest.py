@@ -23,7 +23,7 @@ load_dotenv(env_path)
 
 from vectordb_learn.db.connection import get_pool
 from vectordb_learn.db.operations import create_schema, insert_conversation
-from vectordb_learn.embedding.ollama import get_embedding, generate_title
+from vectordb_learn.embedding.ollama import get_embedding
 
 
 async def ingest_csv(filepath: str, batch_size: int = 10) -> int:
@@ -40,14 +40,14 @@ async def ingest_csv(filepath: str, batch_size: int = 10) -> int:
         for row in reader:
             username = row['username']
             content = row['session_content']
+            title = row.get('title')
             
-            batch.append((username, content))
+            batch.append((username, content, title))
             
             if len(batch) >= batch_size:
-                for username, content in batch:
-                    print(f"\rGenerating embedding and title for record {count + 1}...", end="")
+                for username, content, title in batch:
+                    print(f"\rGenerating embedding for record {count + 1}...", end="")
                     embedding = await get_embedding(content)
-                    title = generate_title(content)
                     await insert_conversation(
                         pool, username, content, embedding, title=title
                     )
@@ -56,10 +56,9 @@ async def ingest_csv(filepath: str, batch_size: int = 10) -> int:
                     
                 batch = []
     
-    for username, content in batch:
-        print(f"\rGenerating embedding and title for record {count + 1}...", end="")
+    for username, content, title in batch:
+        print(f"\rGenerating embedding for record {count + 1}...", end="")
         embedding = await get_embedding(content)
-        title = generate_title(content)
         await insert_conversation(pool, username, content, embedding, title=title)
         count += 1
         print(f"\rInserted {count} conversations...", end="")

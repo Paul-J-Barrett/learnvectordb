@@ -44,8 +44,9 @@ class OpenRouterConfig:
 @dataclass
 class TelemetryConfig:
     """OpenTelemetry configuration."""
-    endpoint: str = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://dockerhost:4318/v1/traces")
+    endpoint: str = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://dockerhost:4318")
     service_name: str = os.getenv("OTEL_SERVICE_NAME", "vectordb-learn")
+    logs_endpoint: str = os.getenv("OTEL_EXPORTER_OTLP_LOGS_ENDPOINT", "http://dockerhost:4318/v1/logs")
 
 
 postgres = PostgresConfig()

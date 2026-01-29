@@ -2,6 +2,9 @@
 
 An educational project for learning PostgreSQL with pgvector through hands-on experimentation. Uses ollama and OpenRouter for generating embeddings and titles from conversation content. 
 
+## Building Notes
+This application was built using opencoder and the model MiniMax M2.1. If you have any issues with any component please try to fix and make a PR. Also the generic conversations in the conversations.csv file are just random text they are not meant to be real users, and sessions data. I was building this to understand how I could add chat conversations to a database and then search that database as memory similar to how ChatGPT stores your conversation history to add to new chat sessions.
+
 ## Quick Start
 
 ```bash
@@ -22,6 +25,11 @@ uv run python -m vectordb_learn.db.ingest data/conversations.csv
 
 # Run the TUI application
 uv run python -m vectordb_learn.app
+
+# start psql interactively on console
+podman exec -it postgres psql -U postgres -d vectordb
+
+
 ```
 
 ## Available Entry Points

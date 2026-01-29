@@ -9,8 +9,22 @@ suitable for learning vector search operations.
 import csv
 import random
 import hashlib
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from vectordb_learn.logging import setup_logging
+
+setup_logging()
+
+import structlog
+
+log = structlog.get_logger()
 
 random.seed(42)
+
+log = structlog.get_logger()
 
 TOPICS = [
     ("Python debugging", "How to debug Python exceptions and tracebacks effectively"),
@@ -207,10 +221,7 @@ Is there a specific aspect of {topic} you'd like me to elaborate on?"""
 def main():
     output_path = "data/conversations.csv"
     
-    print("Generating synthetic conversation dataset...")
-    print(f"Topics: {len(TOPICS)}")
-    print(f"Output: {output_path}")
-    print()
+    log.info("Generating synthetic conversation dataset", topics=len(TOPICS), output=output_path)
     
     with open(output_path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -220,10 +231,7 @@ def main():
             username, content = generate_conversation(topic, description)
             writer.writerow([username, content])
     
-    print(f"Generated {len(TOPICS)} conversations")
-    print(f"Output saved to: {output_path}")
-    print()
-    print("Next steps:")
+    log.info("Generation complete", conversations_generated=len(TOPICS), output=output_path)
     print("  1. Run ./scripts/start-postgres.sh to start the database")
     print("  2. Ingest with: uv run python -m vectordb_learn.db.ingest data/conversations.csv")
 

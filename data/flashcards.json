@@ -1,0 +1,2572 @@
+[
+  {
+    "question": "What is phi4-mini useful for?",
+    "answer": "Lightweight chat and title generation tasks",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between ORDER BY and GROUP BY?",
+    "answer": "ORDER BY sorts results; GROUP BY aggregates rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is the maximum input length for most embedding models?",
+    "answer": "8192 tokens",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of random_page_cost?",
+    "answer": "Planner's estimate of random disk read cost",
+    "explanation": "# Understanding random_page_cost\n\n## The Concept\n\n`random_page_cost` is a configuration parameter (found in PostgreSQL and some other databases) that represents the **query planner's estimated cost of fetching a disk page randomly** rather than sequentially. In PostgreSQL, it defaults to 4.0, meaning the planner assumes a random read is approximately 4 times more expensive than a sequential read (where `seq_page_cost` = 1.0).\n\nThis value feeds into the cost-based optimizer's calculations when deciding between different query execution strategies—particularly when choosing between sequential scans and index scans.\n\n## Why It Matters\n\nThe optimizer uses `random_page_cost` to estimate which access method will be faster. Index scans require multiple random I/O operations (jumping to different disk locations), while sequential scans read contiguous blocks efficiently. If this parameter doesn't match your actual hardware, the planner may choose suboptimal plans.\n\n## Practical Example\n\nOn traditional spinning"
+  },
+  {
+    "question": "What is the difference between information_schema and pg_catalog?",
+    "answer": "information_schema is SQL standard; pg_catalog is PostgreSQL-specific",
+    "explanation": ""
+  },
+  {
+    "question": "How do you structure messages for OpenRouter?",
+    "answer": "[{'role': 'system', 'content': '...'}, {'role': 'user', 'content': '...'}]",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between Messages and Message in pydantic-ai?",
+    "answer": "Messages is a collection; Message is a single message",
+    "explanation": ""
+  },
+  {
+    "question": "What is beam search?",
+    "answer": "Multiple sequence generation with pruning",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of GIN index for full-text search?",
+    "answer": "Fast full-text search queries",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of GIST index?",
+    "answer": "Generalized Search Tree for geometric data",
+    "explanation": ""
+  },
+  {
+    "question": "What is the EXISTS operator?",
+    "answer": "Returns true if subquery returns any rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between synchronous and asynchronous commit?",
+    "answer": "Synchronous waits for WAL flush; asynchronous does not",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ON UPDATE CASCADE?",
+    "answer": "Updates child rows when parent is updated",
+    "explanation": ""
+  },
+  {
+    "question": "What is the AgentResult class in pydantic-ai?",
+    "answer": "Base class for agent run results",
+    "explanation": ""
+  },
+  {
+    "question": "How do you check if an index is being used in queries?",
+    "answer": "EXPLAIN ANALYZE shows Index Scan vs Seq Scan",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between autocommit and explicit transactions?",
+    "answer": "Autocommit commits each statement; explicit requires COMMIT",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_cron extension?",
+    "answer": "Cron-like job scheduling",
+    "explanation": ""
+  },
+  {
+    "question": "What is database normalization?",
+    "answer": "Organizing data to reduce redundancy",
+    "explanation": ""
+  },
+  {
+    "question": "Does pgvector support write-ahead logging (WAL)?",
+    "answer": "Yes, providing ACID compliance for vector operations",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_roaringbitmap?",
+    "answer": "Roaring bitmap data structure for sets",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ON DELETE SET NULL?",
+    "answer": "Sets foreign key to NULL when parent is deleted",
+    "explanation": ""
+  },
+  {
+    "question": "How do you make a chat completion request to OpenRouter?",
+    "answer": "POST to /chat/completions with model and messages",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between user and assistant messages?",
+    "answer": "User is human input; assistant is AI output",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_trgm extension?",
+    "answer": "Trigram-based full-text search and similarity",
+    "explanation": ""
+  },
+  {
+    "question": "What is a covering index?",
+    "answer": "Index containing all columns needed for query",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between declarative and inheritance partitioning?",
+    "answer": "Declarative is managed by PostgreSQL; inheritance is manual",
+    "explanation": ""
+  },
+  {
+    "question": "What information does OpenRouter provide about costs?",
+    "answer": "Credits used and remaining in response headers",
+    "explanation": ""
+  },
+  {
+    "question": "What is structured output?",
+    "answer": "Model response matching a defined schema",
+    "explanation": ""
+  },
+  {
+    "question": "How do you prevent SQL injection in Python PostgreSQL?",
+    "answer": "Use parameterized queries with %s placeholders",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create a virtual environment with uv?",
+    "answer": "uv venv",
+    "explanation": ""
+  },
+  {
+    "question": "What PostgreSQL settings affect vector query performance?",
+    "answer": "shared_buffers, effective_cache_size, maintenance_work_mem, work_mem",
+    "explanation": ""
+  },
+  {
+    "question": "Which pgvector index is recommended for production workloads?",
+    "answer": "HNSW (faster queries at same recall level)",
+    "explanation": ""
+  },
+  {
+    "question": "What is autovacuum?",
+    "answer": "Automatic VACUUM background process",
+    "explanation": ""
+  },
+  {
+    "question": "What is the CROSS APPLY operator?",
+    "answer": "Lateral join in T-SQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the recommended number of lists for IVFFlat indexing?",
+    "answer": "For <1M rows: rows/1000; for >1M rows: sqrt(rows)",
+    "explanation": ""
+  },
+  {
+    "question": "What is a prompt template?",
+    "answer": "A reusable structure for building prompts with variable substitution",
+    "explanation": ""
+  },
+  {
+    "question": "What is a spinlock?",
+    "answer": "Low-level CPU lock for short operations",
+    "explanation": ""
+  },
+  {
+    "question": "What is a partitioned table?",
+    "answer": "Table divided into smaller physical pieces",
+    "explanation": ""
+  },
+  {
+    "question": "What is filtering in vector search?",
+    "answer": "Combining vector similarity with metadata filters",
+    "explanation": ""
+  },
+  {
+    "question": "What is few-shot learning?",
+    "answer": "Providing examples in the prompt to guide model behavior",
+    "explanation": ""
+  },
+  {
+    "question": "What SQL data type does pgvector provide for storing vectors?",
+    "answer": "vector(n) where n is the number of dimensions",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between execute and executemany in asyncpg?",
+    "answer": "execute for single statement; executemany for multiple statements",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of SAVEPOINT?",
+    "answer": "Create nested transaction points for partial rollback",
+    "explanation": ""
+  },
+  {
+    "question": "What is the ANY/SOME operator?",
+    "answer": "Compares value to any result from subquery",
+    "explanation": ""
+  },
+  {
+    "question": "What is chain-of-thought prompting?",
+    "answer": "Asking model to show reasoning steps",
+    "explanation": ""
+  },
+  {
+    "question": "How do you fetch a single row in asyncpg?",
+    "answer": "await conn.fetchrow('SELECT * FROM table WHERE id = $1', id)",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Screen in Textual?",
+    "answer": "A distinct view within the application",
+    "explanation": ""
+  },
+  {
+    "question": "What is the recommended shared memory size for HNSW index builds?",
+    "answer": "At least 1GB, preferably 2GB+",
+    "explanation": ""
+  },
+  {
+    "question": "How does pydantic-ai handle type validation?",
+    "answer": "Uses Pydantic models to validate inputs and outputs",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create a table with SQLAlchemy?",
+    "answer": "Table('name', metadata, Column('id', Integer, primary_key=True), ...)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_standby_archive_delay?",
+    "answer": "Max delay for conflicting queries on standby",
+    "explanation": ""
+  },
+  {
+    "question": "What is pydantic-ai?",
+    "answer": "A Python framework for building AI applications with type safety",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between OpenRouter and direct API calls?",
+    "answer": "Unified interface to multiple providers with consistent API",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between visible and display in Textual?",
+    "answer": "visible affects event handling; display affects rendering",
+    "explanation": ""
+  },
+  {
+    "question": "What is the ALL operator?",
+    "answer": "Compares value to ALL results from subquery",
+    "explanation": ""
+  },
+  {
+    "question": "What is prepared statement caching in asyncpg?",
+    "answer": "Automatically caches prepared statements for performance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of track_activities setting?",
+    "answer": "Tracks current query per session",
+    "explanation": ""
+  },
+  {
+    "question": "How do you export requirements from uv?",
+    "answer": "uv pip compile pyproject.toml -o requirements.txt",
+    "explanation": ""
+  },
+  {
+    "question": "What is connection pooling and why use it?",
+    "answer": "Maintains open connections for reuse, reducing connection overhead",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of etcd in Patroni?",
+    "answer": "Distributed key-value store for cluster coordination",
+    "explanation": ""
+  },
+  {
+    "question": "What are the main ANN indexing algorithms?",
+    "answer": "HNSW, IVFFlat, Product Quantization, LSH",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of work_mem?",
+    "answer": "Memory per operation (sort, hash)",
+    "explanation": ""
+  },
+  {
+    "question": "What is a composite index?",
+    "answer": "Index on multiple columns",
+    "explanation": ""
+  },
+  {
+    "question": "What is the formula for cosine distance used in pgvector?",
+    "answer": "1 - (A · B) / (||A|| × ||B||)",
+    "explanation": ""
+  },
+  {
+    "question": "What is RAG?",
+    "answer": "Retrieval-Augmented Generation - combining search with LLM generation",
+    "explanation": ""
+  },
+  {
+    "question": "How do you chat with a model using Ollama Python library?",
+    "answer": "response = ollama.chat(model='model-name', messages=[{'role': 'user', 'content': 'hello'}])",
+    "explanation": ""
+  },
+  {
+    "question": "What is a lightweight lock (LWLock)?",
+    "answer": "PostgreSQL internal lock for shared memory",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Container in Textual?",
+    "answer": "Widget that holds other widgets",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of REFRESH MATERIALIZED VIEW?",
+    "answer": "Update materialized view with fresh data",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of to_tsvector?",
+    "answer": "Converts text to tsvector format",
+    "explanation": ""
+  },
+  {
+    "question": "What is OpenRouter?",
+    "answer": "A unified API gateway for accessing multiple LLM providers",
+    "explanation": ""
+  },
+  {
+    "question": "How do you enable the pgvector extension in PostgreSQL?",
+    "answer": "CREATE EXTENSION IF NOT EXISTS vector;",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of retry in pydantic-ai?",
+    "answer": "Automatically retries failed requests with backoff",
+    "explanation": ""
+  },
+  {
+    "question": "What is index sharding?",
+    "answer": "Splitting index across multiple machines",
+    "explanation": ""
+  },
+  {
+    "question": "What is denormalization?",
+    "answer": "Adding redundancy for performance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the disadvantage of pgvector vs dedicated vector databases?",
+    "answer": "May be slower at very large scale",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between pglogical and built-in replication?",
+    "answer": "pglogical offers more control and flexibility",
+    "explanation": ""
+  },
+  {
+    "question": "How do you navigate between screens in Textual?",
+    "answer": "self.push_screen() or self.pop_screen()",
+    "explanation": ""
+  },
+  {
+    "question": "How do you stream responses in pydantic-ai?",
+    "answer": "Use agent.run_streamed() instead of agent.run()",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of Consul in Patroni?",
+    "answer": "Service discovery and configuration",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of autovacuum_analyze_threshold?",
+    "answer": "Minimum rows modified before auto-analyze",
+    "explanation": ""
+  },
+  {
+    "question": "What is the DOM in Textual?",
+    "answer": "Hierarchical tree of widgets",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of VACUUM FULL?",
+    "answer": "Reclaims space and reorganizes table",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of min_wal_size?",
+    "answer": "Minimum WAL size retained",
+    "explanation": ""
+  },
+  {
+    "question": "What is the CASE expression?",
+    "answer": "Conditional logic in SQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is a LEFT JOIN?",
+    "answer": "Returns all rows from left table, matched rows from right",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of parallel_setup_cost?",
+    "answer": "Cost of setting up parallel workers",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of shared_buffers in PostgreSQL?",
+    "answer": "Memory for caching data pages",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between completion and chat completion?",
+    "answer": "Completion completes a prefix; chat completion follows conversation format",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between sparse and dense retrieval?",
+    "answer": "Sparse uses keyword matching; dense uses vector similarity",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of prepared statements?",
+    "answer": "Pre-compiled SQL for reuse",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of query rewriting?",
+    "answer": "Transforming user query for better retrieval",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of maintenance_work_mem?",
+    "answer": "Memory for VACUUM, CREATE INDEX",
+    "explanation": ""
+  },
+  {
+    "question": "What is the curse of dimensionality?",
+    "answer": "Problems arising with high-dimensional data",
+    "explanation": ""
+  },
+  {
+    "question": "What is hybrid search?",
+    "answer": "Combining vector similarity with keyword/full-text search",
+    "explanation": ""
+  },
+  {
+    "question": "What is Second Normal Form (2NF)?",
+    "answer": "1NF + no partial dependencies",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between array and JSON array?",
+    "answer": "PostgreSQL array is typed; JSON is schema-less",
+    "explanation": ""
+  },
+  {
+    "question": "How do you use transactions in asyncpg?",
+    "answer": "async with conn.transaction(): statements",
+    "explanation": ""
+  },
+  {
+    "question": "What SQL function returns the dimension of a vector?",
+    "answer": "vector_dims(embedding_column)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_advisory_unlock?",
+    "answer": "Releases advisory lock",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between on_mount and on_load?",
+    "answer": "on_mount runs when screen is shown; on_load runs before",
+    "explanation": ""
+  },
+  {
+    "question": "How do you check Ollama server status?",
+    "answer": "ollama list shows downloaded models",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of full-text search in PostgreSQL?",
+    "answer": "Text search with ranking and relevance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_locks view?",
+    "answer": "Shows current lock status",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between UNION and UNION ALL?",
+    "answer": "UNION removes duplicates; UNION ALL keeps all",
+    "explanation": ""
+  },
+  {
+    "question": "What is a lateral join?",
+    "answer": "Join that can reference preceding tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is asyncpg?",
+    "answer": "A pure-Python, async PostgreSQL client",
+    "explanation": ""
+  },
+  {
+    "question": "What is reranking?",
+    "answer": "Second pass refinement of search results",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between SHARE ROW EXCLUSIVE and EXCLUSIVE lock?",
+    "answer": "SHARE ROW EXCLUSIVE allows some access; EXCLUSIVE blocks most",
+    "explanation": ""
+  },
+  {
+    "question": "What is an LLM?",
+    "answer": "Large Language Model - a neural network trained on vast amounts of text data",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pgvector?",
+    "answer": "Adding vector search to PostgreSQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between embeddings and vectors?",
+    "answer": "Embeddings are vectors created by ML models for semantic representation",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between correlated and non-correlated subquery?",
+    "answer": "Correlated references outer query; non-correlated does not",
+    "explanation": ""
+  },
+  {
+    "question": "What is the structure of an Ollama chat response?",
+    "answer": "Dict with 'message' key containing {'role': '...', 'content': '...'}",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_activity view?",
+    "answer": "Shows active sessions and queries",
+    "explanation": ""
+  },
+  {
+    "question": "What is the NULLS LAST option in ORDER BY?",
+    "answer": "Places NULL values at end",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of the 'model' parameter in OpenRouter requests?",
+    "answer": "Specifies which LLM to use",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between ollama.embed and ollama.embed_distributed?",
+    "answer": "embed_distributed for batch processing across multiple GPUs",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between log and print in Textual?",
+    "answer": "log goes to Textual log; print goes to stdout",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_connections?",
+    "answer": "Maximum client connections allowed",
+    "explanation": ""
+  },
+  {
+    "question": "What is ACID compliance?",
+    "answer": "Atomicity, Consistency, Isolation, Durability",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of vector databases?",
+    "answer": "Optimized storage and retrieval of vector embeddings",
+    "explanation": ""
+  },
+  {
+    "question": "What is the Model class in pydantic-ai?",
+    "answer": "Represents an LLM model with specific configuration",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of IDENTITY column?",
+    "answer": "SQL standard alternative to SERIAL",
+    "explanation": ""
+  },
+  {
+    "question": "What is a system prompt?",
+    "answer": "Instructions that define the AI's behavior and personality",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between pg_stat and pg_statio views?",
+    "answer": "pg_stat counts hits; pg_statio counts I/O operations",
+    "explanation": ""
+  },
+  {
+    "question": "What is a RIGHT JOIN?",
+    "answer": "Returns all rows from right table, matched rows from left",
+    "explanation": ""
+  },
+  {
+    "question": "How do embeddings enable semantic search?",
+    "answer": "Similar concepts have similar vectors, allowing nearest-neighbor search",
+    "explanation": ""
+  },
+  {
+    "question": "What is a FULL OUTER JOIN?",
+    "answer": "Returns all rows when there's a match in either table",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of tsvector and tsquery?",
+    "answer": "tsvector = indexed text; tsquery = search pattern",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_all_indexes view?",
+    "answer": "Shows index usage statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between parallel seq scan and parallel index scan?",
+    "answer": "Seq scan reads table in parallel; index scan uses parallel workers",
+    "explanation": ""
+  },
+  {
+    "question": "How do you handle transactions in psycopg2?",
+    "answer": "Use context manager: with conn.cursor() as cur: or conn.commit()/conn.rollback()",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between @@ and @@@ operators?",
+    "answer": "@@ for text search; @@@ for web search",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of track_functions setting?",
+    "answer": "Tracks function call counts and time",
+    "explanation": ""
+  },
+  {
+    "question": "What is a unique index?",
+    "answer": "Index that enforces unique values",
+    "explanation": ""
+  },
+  {
+    "question": "How do you update UI from a worker in Textual?",
+    "answer": "Call self.post_message or use call_later",
+    "explanation": ""
+  },
+  {
+    "question": "What does ollama.embed() return?",
+    "answer": "A dictionary with 'embeddings' key containing a list of embedding vectors",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of transactions?",
+    "answer": "Group operations that succeed or fail together",
+    "explanation": ""
+  },
+  {
+    "question": "What index types does pgvector support for approximate nearest neighbor search?",
+    "answer": "HNSW and IVFFlat",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between VACUUM and VACUUM FULL?",
+    "answer": "VACUUM reclaims space; VACUUM FULL fully reclaims and locks",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pgcrypto extension?",
+    "answer": "Cryptographic functions for encryption",
+    "explanation": ""
+  },
+  {
+    "question": "What does temperature control in LLM requests?",
+    "answer": "Randomness of output (0 = deterministic, 1 = creative)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of server-side prepared statements?",
+    "answer": "Prepared on server for better performance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between shared buffers and local buffers?",
+    "answer": "Shared: table/index data; local: temporary tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is the vector aggregation function in pgvector?",
+    "answer": "AVG for computing mean of vectors",
+    "explanation": ""
+  },
+  {
+    "question": "What is approximate nearest neighbor (ANN)?",
+    "answer": "A fast search algorithm that trades some accuracy for speed",
+    "explanation": ""
+  },
+  {
+    "question": "What headers are required for OpenRouter requests?",
+    "answer": "Authorization (Bearer token), Content-Type, HTTP-Referer",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of BRIN index?",
+    "answer": "Block Range Index for large sequential data",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of indexes in PostgreSQL?",
+    "answer": "Speed up data retrieval",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of PostGIS?",
+    "answer": "Geospatial data support for PostgreSQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is a token?",
+    "answer": "A unit of text (roughly 4 characters or 0.75 words)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the trade-off between recall and latency?",
+    "answer": "Higher recall typically requires longer search time",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between uv add and uv pip install?",
+    "answer": "uv add updates pyproject.toml; uv pip install does not",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between Static and Label in Textual?",
+    "answer": "Static for text display; Label is deprecated",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of track_io_timing setting?",
+    "answer": "Tracks I/O timing statistics",
+    "explanation": ""
+  },
+  {
+    "question": "How do you handle errors in Ollama Python calls?",
+    "answer": "Try/except around ollama calls with specific exception types",
+    "explanation": ""
+  },
+  {
+    "question": "What is a vector database?",
+    "answer": "A database optimized for storing and searching vector embeddings",
+    "explanation": ""
+  },
+  {
+    "question": "How do you handle rate limits in OpenRouter?",
+    "answer": "Check X-RateLimit-Remaining headers and implement backoff",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between retrieval and search?",
+    "answer": "Retrieval is about finding; search is about querying",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between primary key and unique constraint?",
+    "answer": "Primary key is NOT NULL + UNIQUE + identifies row",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of effective_io_concurrency?",
+    "answer": "Number of concurrent disk operations",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of system message in chat completions?",
+    "answer": "Sets the AI's role and behavior",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between uv run and python?",
+    "answer": "uv run uses project dependencies; python uses system Python",
+    "explanation": ""
+  },
+  {
+    "question": "How do you execute a query with asyncpg?",
+    "answer": "await conn.execute('SQL_QUERY') or await conn.fetch('SQL_QUERY')",
+    "explanation": ""
+  },
+  {
+    "question": "How do you manage Python versions with uv?",
+    "answer": "uv python install 3.12",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_buffercache view?",
+    "answer": "Shows what's in shared buffers",
+    "explanation": ""
+  },
+  {
+    "question": "What is a nested loop join?",
+    "answer": "Joins by iterating outer and scanning inner",
+    "explanation": ""
+  },
+  {
+    "question": "What is k-nearest neighbors (k-NN)?",
+    "answer": "Algorithm finding k closest points to query",
+    "explanation": ""
+  },
+  {
+    "question": "What is a PEP 582?",
+    "answer": "Python packaging without virtual environments (supported by uv)",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Rich integration in Textual?",
+    "answer": "For beautiful text formatting and tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between similarity and distance?",
+    "answer": "Similarity is higher for more alike; distance is lower for more alike",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of NOWAIT option in locking?",
+    "answer": "Immediately returns error if lock not available",
+    "explanation": ""
+  },
+  {
+    "question": "What are popular vector databases?",
+    "answer": "Pinecone, Weaviate, Qdrant, Milvus, Chroma",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_ivm?",
+    "answer": "Incremental View Maintenance",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create an HNSW index in pgvector?",
+    "answer": "CREATE INDEX ON table USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64);",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of FORMAT in EXPLAIN?",
+    "answer": "Controls output format (TEXT, JSON, YAML, XML)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between fetch and fetchval in asyncpg?",
+    "answer": "fetch returns all rows; fetchval returns single value",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between logical and physical replication?",
+    "answer": "Logical replicates at table level; physical at disk level",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of hot_standby_feedback?",
+    "answer": "Standby sends cancel requests to primary",
+    "explanation": ""
+  },
+  {
+    "question": "What is a uv lock file?",
+    "answer": "Reproducible dependency resolution",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_standby_streaming_delay?",
+    "answer": "Max delay for conflicting queries during streaming",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between core and ORM in SQLAlchemy?",
+    "answer": "Core is direct SQL manipulation; ORM maps Python objects to database rows",
+    "explanation": ""
+  },
+  {
+    "question": "How do you pull a model in Ollama?",
+    "answer": "ollama pull model-name",
+    "explanation": ""
+  },
+  {
+    "question": "How do you install from pyproject.toml with uv?",
+    "answer": "uv sync",
+    "explanation": ""
+  },
+  {
+    "question": "What is a foreign key constraint?",
+    "answer": "Ensures referential integrity between tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between B-tree and hash indexes?",
+    "answer": "B-tree supports range queries; hash supports equality only",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pglogical?",
+    "answer": "Logical replication extension",
+    "explanation": ""
+  },
+  {
+    "question": "What is an Engine in SQLAlchemy?",
+    "answer": "Central object for database connections",
+    "explanation": ""
+  },
+  {
+    "question": "What is the sparsevec(n) data type in pgvector?",
+    "answer": "Sparse vectors with non-zero element tracking",
+    "explanation": ""
+  },
+  {
+    "question": "What is Third Normal Form (3NF)?",
+    "answer": "2NF + no transitive dependencies",
+    "explanation": ""
+  },
+  {
+    "question": "What Python HTTP client is commonly used with OpenRouter?",
+    "answer": "httpx (async) or requests (sync)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of logical replication?",
+    "answer": "Replication at database level",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between HNSW and IVFFlat indexing?",
+    "answer": "HNSW is faster with higher recall; IVFFlat builds faster with lower memory",
+    "explanation": ""
+  },
+  {
+    "question": "What is the relationship between embedding quality and search accuracy?",
+    "answer": "Better embeddings produce more accurate semantic search results",
+    "explanation": ""
+  },
+  {
+    "question": "What is a unit vector?",
+    "answer": "A vector with magnitude 1",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of BUFFERS in EXPLAIN?",
+    "answer": "Shows pages read from cache and disk",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of hot_standby?",
+    "answer": "Allows read queries on standby",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_statements extension?",
+    "answer": "Tracks query execution statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is approximate k-NN?",
+    "answer": "Fast k-NN using indexing structures",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between generate and chat in Ollama?",
+    "answer": "generate is for text completion; chat is for conversational interactions",
+    "explanation": ""
+  },
+  {
+    "question": "What is the maximum number of dimensions for a pgvector vector type?",
+    "answer": "16,000 dimensions",
+    "explanation": ""
+  },
+  {
+    "question": "What is batch embedding?",
+    "answer": "Generating embeddings for multiple texts in a single API call",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of SUBSCRIPTION in replication?",
+    "answer": "Receives replicated data",
+    "explanation": ""
+  },
+  {
+    "question": "How do you pass dependencies to an agent?",
+    "answer": "Provide deps parameter to agent.run()",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of connection pooling in PostgreSQL?",
+    "answer": "Reusing database connections for performance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of min_parallel_index_scan_size?",
+    "answer": "Minimum index size for parallel scan",
+    "explanation": ""
+  },
+  {
+    "question": "How do you configure model settings in pydantic-ai?",
+    "answer": "Pass model_settings parameter with temperature, max_tokens, etc.",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between immediate and fast checkpoint?",
+    "answer": "Immediate forces checkpoint; fast schedules it",
+    "explanation": ""
+  },
+  {
+    "question": "What is one-shot learning?",
+    "answer": "Providing a single example in prompt",
+    "explanation": ""
+  },
+  {
+    "question": "What is the NULLIF function?",
+    "answer": "Returns NULL if arguments are equal",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Session in SQLAlchemy ORM?",
+    "answer": "Object for ORM operations and identity management",
+    "explanation": ""
+  },
+  {
+    "question": "What is the OUTER APPLY operator?",
+    "answer": "Lateral join preserving unmatched rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is halfvec_cosine_ops?",
+    "answer": "Distance operator class for halfvec type with cosine distance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between view and materialized view?",
+    "answer": "View is virtual; materialized view is stored",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of the DESCRIBE statement?",
+    "answer": "Returns information about prepared statement",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pgrouting_dijkstra?",
+    "answer": "Shortest path algorithm",
+    "explanation": ""
+  },
+  {
+    "question": "What is JSON mode in API responses?",
+    "answer": "Ensures model output is valid JSON",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of SKIP LOCKED option?",
+    "answer": "Skips locked rows instead of waiting",
+    "explanation": ""
+  },
+  {
+    "question": "What operators does pgvector provide for vector comparison?",
+    "answer": "<=> for cosine, <-> for Euclidean, <#> for inner product, <+> for Manhattan",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of logical_decoding_work_mem?",
+    "answer": "Memory for logical decoding",
+    "explanation": ""
+  },
+  {
+    "question": "What is a clustered index?",
+    "answer": "Index that determines physical row order",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between GEOGRAPHY and GEOMETRY in PostGIS?",
+    "answer": "GEOGRAPHY uses meters; GEOMETRY uses Cartesian coordinates",
+    "explanation": ""
+  },
+  {
+    "question": "What is the formula for normalizing a vector?",
+    "answer": "v / ||v|| where ||v|| is the magnitude",
+    "explanation": ""
+  },
+  {
+    "question": "What is vector normalization?",
+    "answer": "Scaling vector to unit length",
+    "explanation": ""
+  },
+  {
+    "question": "What is a database index?",
+    "answer": "Data structure for fast data retrieval",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of keep_alive parameter in Ollama?",
+    "answer": "Controls how long the model stays loaded in memory",
+    "explanation": ""
+  },
+  {
+    "question": "How do you specify the model for an agent?",
+    "answer": "agent = Agent(model='openrouter:minimax/minimax-m2.1')",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between sync and async PostgreSQL drivers?",
+    "answer": "Sync blocks while waiting; async allows other tasks during I/O",
+    "explanation": ""
+  },
+  {
+    "question": "What is a self-join?",
+    "answer": "Joining a table with itself",
+    "explanation": ""
+  },
+  {
+    "question": "How do you delete a model in Ollama?",
+    "answer": "ollama rm model-name",
+    "explanation": ""
+  },
+  {
+    "question": "What is streaming replication?",
+    "answer": "Real-time replication to standby servers",
+    "explanation": ""
+  },
+  {
+    "question": "What is an INNER JOIN?",
+    "answer": "Returns rows with matches in both tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_blocking_pids function?",
+    "answer": "Shows processes blocking other processes",
+    "explanation": ""
+  },
+  {
+    "question": "What is the IN operator?",
+    "answer": "Checks if value matches any in list/subquery",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of commit_siblings?",
+    "answer": "Minimum concurrent transactions for group commit",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between online and offline indexing?",
+    "answer": "Online adds documents incrementally; offline rebuilds index",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of VACUUM in PostgreSQL?",
+    "answer": "Reclaims space and updates statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is context window?",
+    "answer": "Maximum tokens the model can see at once",
+    "explanation": ""
+  },
+  {
+    "question": "What does halfvec(n) data type store?",
+    "answer": "Half-precision (16-bit) floating point vectors, using 50% less storage",
+    "explanation": ""
+  },
+  {
+    "question": "What is a DEFAULT constraint?",
+    "answer": "Provides a default value when none is specified",
+    "explanation": ""
+  },
+  {
+    "question": "What is a CTE (Common Table Expression)?",
+    "answer": "Named temporary result set with WITH clause",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between WHERE and HAVING?",
+    "answer": "WHERE filters rows; HAVING filters groups",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Widget in Textual?",
+    "answer": "Reusable UI components like buttons, inputs",
+    "explanation": ""
+  },
+  {
+    "question": "What is a FOREIGN KEY constraint?",
+    "answer": "Ensures referential integrity between tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is binary_quantize function in pgvector?",
+    "answer": "Converts float vectors to binary for memory-efficient indexing",
+    "explanation": ""
+  },
+  {
+    "question": "What is index selectivity?",
+    "answer": "Ratio of distinct values to total rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between WHERE and HAVING?",
+    "answer": "WHERE filters rows before grouping; HAVING filters after",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_parallel_workers_per_gather?",
+    "answer": "Maximum workers per gather node",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between recall and precision in search?",
+    "answer": "Recall = found/total relevant; Precision = found/total returned",
+    "explanation": ""
+  },
+  {
+    "question": "What is t-SNE?",
+    "answer": "t-Distributed Stochastic Neighbor Embedding - nonlinear dimensionality reduction",
+    "explanation": ""
+  },
+  {
+    "question": "What is nomic-embed-text commonly used for?",
+    "answer": "Generating text embeddings (384 dimensions)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of PostPIC?",
+    "answer": "Image processing extension",
+    "explanation": ""
+  },
+  {
+    "question": "What is a correlated subquery?",
+    "answer": "Subquery that references outer query",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of wal_keep_size?",
+    "answer": "Minimum WAL to retain for replication",
+    "explanation": "# wal_keep_size in PostgreSQL\n\n## What It Is\n\n`wal_keep_size` is a PostgreSQL configuration parameter that specifies the **minimum amount of Write-Ahead Log (WAL) data to retain** for potential replication purposes. When set to a non-zero value, PostgreSQL ensures that at least this much WAL data is kept available, preventing premature recycling or deletion of WAL segment files.\n\n## Why It Matters\n\nIn streaming replication, standby servers continuously fetch WAL changes from the primary. If the standby falls behind or experiences network issues, the primary might recycle WAL files before the standby has a chance to consume them. This causes replication failure and requires a full re-synchronization"
+  },
+  {
+    "question": "What is nearest neighbor search?",
+    "answer": "Finding vectors closest to a query vector based on distance metric",
+    "explanation": ""
+  },
+  {
+    "question": "What is asynchronous replication?",
+    "answer": "Does not wait for standby confirmation",
+    "explanation": ""
+  },
+  {
+    "question": "What is index build time?",
+    "answer": "Time required to create the vector index structure",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Worker in Textual?",
+    "answer": "Background task that doesn't block UI",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of PostgreSQL extensions?",
+    "answer": "Add functionality without modifying core database",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of effective_cache_size?",
+    "answer": "Hint to planner about available cache",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of checkpoint_completion_target?",
+    "answer": "Spread checkpoint writes over time",
+    "explanation": ""
+  },
+  {
+    "question": "What is symmetric vs asymmetric embeddings?",
+    "answer": "Same model for queries/docs vs different models for short queries vs long documents",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between Agent and Worker in pydantic-ai?",
+    "answer": "Agent is for conversational AI; Worker is for tool use",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of a sequence in PostgreSQL?",
+    "answer": "Auto-incrementing number generator",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between ACCESS SHARE and ACCESS EXCLUSIVE lock?",
+    "answer": "ACCESS SHARE allows reads; ACCESS EXCLUSIVE blocks all access",
+    "explanation": ""
+  },
+  {
+    "question": "How do you install packages with uv?",
+    "answer": "uv add package-name",
+    "explanation": ""
+  },
+  {
+    "question": "What is the L2 distance operator in pgvector?",
+    "answer": "<-> for Euclidean distance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between session-level and transaction-level advisory locks?",
+    "answer": "Session: released on disconnect; transaction: released on commit/rollback",
+    "explanation": ""
+  },
+  {
+    "question": "What is cosine distance in pgvector?",
+    "answer": "<=> measuring angle between vectors (0 = identical, 2 = opposite)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of GROUP BY?",
+    "answer": "Aggregates rows into summary rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of superuser_reserved_connections?",
+    "answer": "Connections reserved for superusers",
+    "explanation": ""
+  },
+  {
+    "question": "What is a subquery?",
+    "answer": "Query nested inside another query",
+    "explanation": ""
+  },
+  {
+    "question": "What embedding model produces 384-dimensional vectors?",
+    "answer": "nomic-embed-text",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of presence_penalty in OpenRouter?",
+    "answer": "Reduces repetition of concepts",
+    "explanation": ""
+  },
+  {
+    "question": "What is fine-tuning?",
+    "answer": "Training a model on specific data for improved performance on tasks",
+    "explanation": ""
+  },
+  {
+    "question": "What is SQLAlchemy?",
+    "answer": "An ORM and SQL toolkit for Python databases",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_partman extension?",
+    "answer": "Table partitioning management",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between warm standby and hot standby?",
+    "answer": "Warm: read-only queries not allowed; Hot: read-only queries allowed",
+    "explanation": ""
+  },
+  {
+    "question": "What is bi-encoder?",
+    "answer": "Model that encodes query and document separately",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of log_lock_waits?",
+    "answer": "Logs when process waits for lock",
+    "explanation": ""
+  },
+  {
+    "question": "What is binary quantization in pgvector?",
+    "answer": "Converting float vectors to binary for faster search with less memory",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between COUNT(*)",
+    "answer": " COUNT(column)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of EXCEPT in SQL?",
+    "answer": "Returns rows in first query not in second",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of UNION in SQL?",
+    "answer": "Combines results from multiple SELECT statements",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of deadlock_timeout?",
+    "answer": "Time before checking for deadlock",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of the /models endpoint?",
+    "answer": "Lists available models and their pricing",
+    "explanation": ""
+  },
+  {
+    "question": "What is uv?",
+    "answer": "A fast Python package manager written in Rust",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between IN and EXISTS?",
+    "answer": "IN compares values; EXISTS checks for row existence",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of synchronous_commit setting?",
+    "answer": "Controls when transaction commits",
+    "explanation": ""
+  },
+  {
+    "question": "What is query_one in Textual?",
+    "answer": "Finds a single widget by selector",
+    "explanation": ""
+  },
+  {
+    "question": "What is the advantage of pgvector over dedicated vector databases?",
+    "answer": "Uses existing PostgreSQL infrastructure",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between ROW_NUMBER",
+    "answer": " RANK",
+    "explanation": ""
+  },
+  {
+    "question": "How do you enable streaming with OpenRouter?",
+    "answer": "Set stream=True and iterate over the response chunks",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create a connection pool in asyncpg?",
+    "answer": "pool = await asyncpg.create_pool(host='...', user='...', password='...', database='...')",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of autovacuum_max_workers?",
+    "answer": "Number of concurrent auto-vacuum processes",
+    "explanation": ""
+  },
+  {
+    "question": "How do you list installed models?",
+    "answer": "ollama list",
+    "explanation": ""
+  },
+  {
+    "question": "How do you insert a vector into pgvector?",
+    "answer": "INSERT INTO table (embedding) VALUES ('[0.1, 0.2, 0.3, ...]');",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between dot product and inner product?",
+    "answer": "Same concept for real vectors",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of statement_timeout?",
+    "answer": "Maximum query execution time",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between symmetric and asymmetric search?",
+    "answer": "Same model for query/index vs different models for each",
+    "explanation": ""
+  },
+  {
+    "question": "How do you stream responses with Ollama?",
+    "answer": "ollama.chat(model='name', messages=[...], stream=True)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between OVERLAPS and && operators?",
+    "answer": "OVERLAPS for date ranges; && for arrays",
+    "explanation": ""
+  },
+  {
+    "question": "What is Locality Sensitive Hashing (LSH)?",
+    "answer": "Hashing that preserves locality for approximate search",
+    "explanation": ""
+  },
+  {
+    "question": "How do you handle errors in pydantic-ai?",
+    "answer": "Try/except around agent.run() or use result.raise_on_failure()",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of top_p parameter in OpenRouter?",
+    "answer": "Nucleus sampling threshold (alternative to temperature)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_tokens?",
+    "answer": "Limits the length of generated responses",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pgBackRest?",
+    "answer": "Backup and recovery tool for PostgreSQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pgpool-II?",
+    "answer": "Connection pooler and load balancer",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ltree extension?",
+    "answer": "Tree-like data structure for hierarchies",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pgRouting?",
+    "answer": "Routing and network analysis extension",
+    "explanation": ""
+  },
+  {
+    "question": "What is latency in vector search?",
+    "answer": "Time to return search results",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_bgwriter view?",
+    "answer": "Shows background writer statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is Minimax M2.1?",
+    "answer": "A fast, efficient LLM model available through OpenRouter",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of PUBLICATION in replication?",
+    "answer": "Defines what tables are replicated",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between track_activities and track_query?",
+    "answer": "track_activities tracks current query; track_query is deprecated",
+    "explanation": ""
+  },
+  {
+    "question": "What is dimensionality reduction?",
+    "answer": "Reducing vector dimensions while preserving structure",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of commit_delay?",
+    "answer": "Delay before group commit",
+    "explanation": ""
+  },
+  {
+    "question": "What is CSS in Textual?",
+    "answer": "Styling language for terminal UI",
+    "explanation": ""
+  },
+  {
+    "question": "How do you specify response format in OpenRouter?",
+    "answer": "Use 'response_format' parameter for JSON mode",
+    "explanation": ""
+  },
+  {
+    "question": "How do you add dev dependencies with uv?",
+    "answer": "uv add --dev package-name",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of Patroni?",
+    "answer": "High availability solution for PostgreSQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of BDR (Bi-Directional Replication)?",
+    "answer": "Multi-master replication for PostgreSQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between LEFT JOIN and INNER JOIN?",
+    "answer": "LEFT JOIN includes unmatched left rows; INNER JOIN only matches",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_all_tables view?",
+    "answer": "Shows table access statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is the Hamming distance operator for binary vectors?",
+    "answer": "<~>",
+    "explanation": ""
+  },
+  {
+    "question": "What is recall in vector database context?",
+    "answer": "Percentage of true nearest neighbors returned",
+    "explanation": ""
+  },
+  {
+    "question": "What does IVFFlat stand for?",
+    "answer": "Inverted File Flat",
+    "explanation": ""
+  },
+  {
+    "question": "What is hash partitioning?",
+    "answer": "Partitioning by hash of key",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of min_size and max_size in connection pool?",
+    "answer": "Minimum and maximum number of connections to maintain",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of wal_level?",
+    "answer": "Controls WAL information logged",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of track_counts setting?",
+    "answer": "Tracks table and index access counts",
+    "explanation": ""
+  },
+  {
+    "question": "What is a vector index?",
+    "answer": "A data structure that enables fast similarity search",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between SERIAL and BIGSERIAL?",
+    "answer": "SERIAL is 4-byte; BIGSERIAL is 8-byte",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between Hamming and Euclidean distance?",
+    "answer": "Hamming counts differing positions; Euclidean measures geometric distance",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create a tool in pydantic-ai?",
+    "answer": "Define a function and use @tool decorator",
+    "explanation": ""
+  },
+  {
+    "question": "What Python library is used to interact with Ollama?",
+    "answer": "ollama (pip install ollama)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of fsync setting?",
+    "answer": "Forces WAL writes to disk",
+    "explanation": ""
+  },
+  {
+    "question": "What does HNSW stand for?",
+    "answer": "Hierarchical Navigable Small World",
+    "explanation": ""
+  },
+  {
+    "question": "How do you upgrade pgvector extension?",
+    "answer": "ALTER EXTENSION vector UPDATE TO 'version';",
+    "explanation": ""
+  },
+  {
+    "question": "What is UMAP?",
+    "answer": "Uniform Manifold Approximation and Projection - nonlinear dimensionality reduction",
+    "explanation": ""
+  },
+  {
+    "question": "What is a materialized view?",
+    "answer": "Pre-computed query result stored as a table",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between READ COMMITTED and REPEATABLE READ?",
+    "answer": "READ COMMITTED sees committed data; REPEATABLE READ sees snapshot",
+    "explanation": ""
+  },
+  {
+    "question": "What is the L1 distance operator in pgvector?",
+    "answer": "<+> for Manhattan/taxicab distance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the recommended PostgreSQL version for pgvector?",
+    "answer": "PostgreSQL 13 or later",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of wal_buffers?",
+    "answer": "WAL data held in memory",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of GIN index on JSONB?",
+    "answer": "Fast JSON key/value queries",
+    "explanation": ""
+  },
+  {
+    "question": "What is a non-clustered index?",
+    "answer": "Index separate from data rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is reciprocal rank fusion?",
+    "answer": "Combining rankings from multiple search systems",
+    "explanation": ""
+  },
+  {
+    "question": "How do you specify a different host for Ollama?",
+    "answer": "OLLAMA_HOST=http://remote:11434 ollama pull model",
+    "explanation": ""
+  },
+  {
+    "question": "What is perplexity?",
+    "answer": "Measure of model uncertainty on text",
+    "explanation": ""
+  },
+  {
+    "question": "What is zero-shot learning?",
+    "answer": "Performing tasks without examples in prompt",
+    "explanation": ""
+  },
+  {
+    "question": "What is range partitioning?",
+    "answer": "Partitioning by value ranges",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between JSON and JSONB?",
+    "answer": "JSON is text; JSONB is binary with indexing",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of agent.run_sync()?",
+    "answer": "Synchronous version of agent.run() for non-async code",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of archive_command?",
+    "answer": "Command to copy WAL segments",
+    "explanation": ""
+  },
+  {
+    "question": "What is a surrogate key?",
+    "answer": "Artificial primary key (e.g., auto-incrementing ID)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of checkpoint_warning?",
+    "answer": "Warns if checkpoints too frequent",
+    "explanation": ""
+  },
+  {
+    "question": "What is vector addition?",
+    "answer": "Element-wise addition of two vectors",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of EXPLAIN in PostgreSQL?",
+    "answer": "Shows query execution plan",
+    "explanation": ""
+  },
+  {
+    "question": "What is Boyce-Codd Normal Form (BCNF)?",
+    "answer": "Every determinant is a candidate key",
+    "explanation": ""
+  },
+  {
+    "question": "What is an advisory lock?",
+    "answer": "Application-defined lock for coordination",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of autovacuum_vacuum_threshold?",
+    "answer": "Minimum rows deleted/updated before auto-vacuum",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of SERIAL pseudo-type?",
+    "answer": "Creates sequence and NOT NULL integer column",
+    "explanation": ""
+  },
+  {
+    "question": "What is a JOIN clause in SQL?",
+    "answer": "Combines rows from two or more tables",
+    "explanation": ""
+  },
+  {
+    "question": "How do you set the search parameters at runtime in pgvector?",
+    "answer": "SET hnsw.ef_search = 100;",
+    "explanation": ""
+  },
+  {
+    "question": "How do you generate embeddings with Ollama in Python?",
+    "answer": "response = ollama.embed(model='model-name', input='text')",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ON DELETE CASCADE?",
+    "answer": "Automatically deletes child rows when parent is deleted",
+    "explanation": ""
+  },
+  {
+    "question": "What is First Normal Form (1NF)?",
+    "answer": "Atomic values, no repeating groups",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of plainto_tsquery?",
+    "answer": "Converts text to tsquery for simple matching",
+    "explanation": ""
+  },
+  {
+    "question": "What is the NULLS FIRST option in ORDER BY?",
+    "answer": "Places NULL values at beginning",
+    "explanation": ""
+  },
+  {
+    "question": "What is psycopg2-binary?",
+    "answer": "A PostgreSQL adapter for Python (synchronous)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between text-generation and embeddings?",
+    "answer": "Text-generation produces new text; embeddings convert text to vectors",
+    "explanation": ""
+  },
+  {
+    "question": "What is inner product?",
+    "answer": "Sum of element-wise multiplication (higher = more similar for normalized vectors)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ANALYZE in PostgreSQL?",
+    "answer": "Update table statistics for query planner",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between sparse and dense vectors?",
+    "answer": "Sparse has many zeros; dense has few zeros",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of temperature in generation?",
+    "answer": "Controls randomness (0 = focused, 1 = creative)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of wal_writer_delay?",
+    "answer": "Time between WAL flushes",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of frequency_penalty in OpenRouter?",
+    "answer": "Reduces repetition of tokens",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ANALYZE command?",
+    "answer": "Updates statistics for query planner",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between traditional and vector databases?",
+    "answer": "Traditional = exact match; Vector = similarity search",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between shortest_path and dijkstra?",
+    "answer": "dijkstra is the algorithm; shortest_path is legacy function",
+    "explanation": ""
+  },
+  {
+    "question": "What is the ef_search parameter used for in pgvector?",
+    "answer": "Controls search time vs recall tradeoff (higher = better recall, slower)",
+    "explanation": ""
+  },
+  {
+    "question": "What is self-consistency?",
+    "answer": "Generating multiple reasoning paths and selecting most common answer",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between pg_dump and pg_dumpall?",
+    "answer": "pg_dump backups single database; pg_dumpall backups all",
+    "explanation": ""
+  },
+  {
+    "question": "What is prompt engineering?",
+    "answer": "Crafting effective prompts to get desired model outputs",
+    "explanation": ""
+  },
+  {
+    "question": "What is a trigger?",
+    "answer": "Automatic function execution on database events",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between LIKE and ILIKE?",
+    "answer": "LIKE is case-sensitive; ILIKE is case-insensitive",
+    "explanation": ""
+  },
+  {
+    "question": "What is the structure of a pyproject.toml?",
+    "answer": "[project], [build-system], [tool.uv] sections",
+    "explanation": ""
+  },
+  {
+    "question": "What is the base URL for OpenRouter API?",
+    "answer": "https://openrouter.ai/api/v1",
+    "explanation": ""
+  },
+  {
+    "question": "What is list partitioning?",
+    "answer": "Partitioning by discrete values",
+    "explanation": ""
+  },
+  {
+    "question": "What is the magnitude of a vector?",
+    "answer": "Length of the vector (L2 norm)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between extended query and simple query?",
+    "answer": "Extended parses separately from execution",
+    "explanation": ""
+  },
+  {
+    "question": "What is Product Quantization?",
+    "answer": "Vector compression technique for large-scale search",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_wal_size?",
+    "answer": "Maximum WAL size before checkpoint",
+    "explanation": ""
+  },
+  {
+    "question": "What is recall in vector search?",
+    "answer": "Percentage of true nearest neighbors returned",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of a failover?",
+    "answer": "Automatic switch to standby when primary fails",
+    "explanation": ""
+  },
+  {
+    "question": "What is normalized discounted cumulative gain (NDCG)?",
+    "answer": "Ranking quality metric considering position",
+    "explanation": ""
+  },
+  {
+    "question": "What is a distance metric?",
+    "answer": "A function that measures similarity between vectors",
+    "explanation": ""
+  },
+  {
+    "question": "What timeout parameters can be set for Ollama requests?",
+    "answer": "request_timeout parameter in seconds",
+    "explanation": ""
+  },
+  {
+    "question": "What is vector normalization?",
+    "answer": "Scaling vectors to unit length for consistent similarity",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between session and transaction pooling?",
+    "answer": "Session: one connection per client; transaction: connection per transaction",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of COPY command in PostgreSQL?",
+    "answer": "Bulk data import/export",
+    "explanation": ""
+  },
+  {
+    "question": "What is the COALESCE function?",
+    "answer": "Returns first non-NULL argument",
+    "explanation": ""
+  },
+  {
+    "question": "What is top_k sampling?",
+    "answer": "Randomly selects from top k most likely tokens",
+    "explanation": ""
+  },
+  {
+    "question": "How do you add messages to a conversation in pydantic-ai?",
+    "answer": "Use messages parameter in agent.run() or history",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between COPY and INSERT?",
+    "answer": "COPY is faster for bulk operations",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_database view?",
+    "answer": "Shows database-level statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of SP-GIST index?",
+    "answer": "Space-Partitioned GIST for irregular data",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of passage retrieval?",
+    "answer": "Finding relevant text passages within documents",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of INTERSECT in SQL?",
+    "answer": "Returns rows common to all queries",
+    "explanation": ""
+  },
+  {
+    "question": "What is reranking?",
+    "answer": "Using a more expensive model to refine ANN search results",
+    "explanation": ""
+  },
+  {
+    "question": "What is synchronous replication?",
+    "answer": "Waits for standby to confirm before committing",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of the m parameter in HNSW indexing?",
+    "answer": "Number of connections per layer (higher = more memory, better recall)",
+    "explanation": "## The m Parameter in HNSW Indexing\n\n**HNSW** (Hierarchical Navigable Small World) is a graph-based algorithm for efficient approximate nearest neighbor (ANN) search. Think of it as building a multi-layered highway system where each layer is a simplified graph connecting data points.\n\n**What m Controls**\n\nThe `m` parameter defines how many bidirectional connections (edges) each point maintains to its neighbors in each layer of the graph. When inserting a point, the algorithm searches upward through layers and establishes exactly `m` connections at each level.\n\n**Why It Matters**\n\nThis parameter directly balances the classic **speed vs. accuracy trade-off**:\n- **Higher m**: More connections mean more paths to explore during search, improving recall (finding true nearest neighbors) but increasing memory usage and query time\n- **Lower m**: Fewer connections reduce memory footprint and speed up queries, but risk missing relevant neighbors\n\nTypical values range from 5-100, with 16 being a common default in many implementations.\n\n**Practical Example**\n\nIf you're building a product recommendation system with 10 million items:\n- With `m=8`, you might achieve 85% recall using 4GB of memory\n- With `m=32`, you could reach 95% recall but need 12GB of memory\n\n**Related Concepts**\n- **efConstruction**: Controls the quality during index building (higher = better index, slower build)\n- **efSearch**: Number of candidates examined during queries\n- **M"
+  },
+  {
+    "question": "What is a merge join?",
+    "answer": "Joins sorted tables by merging",
+    "explanation": ""
+  },
+  {
+    "question": "What is Manhattan distance?",
+    "answer": "Sum of absolute differences (L1 norm)",
+    "explanation": ""
+  },
+  {
+    "question": "question",
+    "answer": "answer",
+    "explanation": ""
+  },
+  {
+    "question": "What is max_tokens parameter?",
+    "answer": "Maximum number of tokens in the response",
+    "explanation": ""
+  },
+  {
+    "question": "What is vector quantization?",
+    "answer": "Compressing vectors by reducing precision to save storage",
+    "explanation": ""
+  },
+  {
+    "question": "What is a UNIQUE constraint?",
+    "answer": "Ensures all values in a column are unique",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of the pg_catalog schema?",
+    "answer": "Contains system catalogs and views",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between app.run() and app.run_async()?",
+    "answer": "run() blocks; run_async() is for async contexts",
+    "explanation": ""
+  },
+  {
+    "question": "What OpenAI embedding model should you use for text?",
+    "answer": "text-embedding-3-small (1536 dimensions)",
+    "explanation": ""
+  },
+  {
+    "question": "What is a natural key?",
+    "answer": "Key from existing data (e.g., email, SSN)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the Jaccard distance operator for binary vectors?",
+    "answer": "<%>",
+    "explanation": ""
+  },
+  {
+    "question": "What is the compose method in Textual?",
+    "answer": "Defines widgets in the UI",
+    "explanation": ""
+  },
+  {
+    "question": "How do you close a connection in asyncpg?",
+    "answer": "await conn.close() or await pool.close()",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create an IVFFlat index in pgvector?",
+    "answer": "CREATE INDEX ON table USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);",
+    "explanation": ""
+  },
+  {
+    "question": "What is a CHECK constraint?",
+    "answer": "Ensures column values meet a condition",
+    "explanation": ""
+  },
+  {
+    "question": "What is scalar multiplication?",
+    "answer": "Multiplying each element by a constant",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of PgBouncer?",
+    "answer": "Lightweight connection pooler",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_try_advisory_lock?",
+    "answer": "Tries to acquire advisory lock without blocking",
+    "explanation": ""
+  },
+  {
+    "question": "What is a deadlock?",
+    "answer": "Two transactions waiting for each other to release locks",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of PARTITION BY in window functions?",
+    "answer": "Divides rows into partitions for separate calculations",
+    "explanation": ""
+  },
+  {
+    "question": "What is the default host for Ollama API?",
+    "answer": "http://localhost:11434",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between row-level and table-level locking?",
+    "answer": "Row-level locks individual rows; table-level locks whole table",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of min_parallel_table_scan_size?",
+    "answer": "Minimum table size for parallel scan",
+    "explanation": ""
+  },
+  {
+    "question": "What is top_p sampling?",
+    "answer": "Nucleus sampling - selects from smallest set of tokens summing to p",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of max_slot_wal_keep_size?",
+    "answer": "Maximum WAL retained for replication slot",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ef_construction in HNSW indexing?",
+    "answer": "Index build quality (higher = slower build, better recall)",
+    "explanation": ""
+  },
+  {
+    "question": "What is a hash join?",
+    "answer": "Joins tables using hash table",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of ts_rank?",
+    "answer": "Ranks search results by relevance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of parallel_tuple_cost?",
+    "answer": "Cost of passing tuple between workers",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between CASE searched and CASE simple?",
+    "answer": "Simple compares values; searched uses conditions",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of the LIMIT clause in SQL?",
+    "answer": "Restricts the number of rows returned",
+    "explanation": ""
+  },
+  {
+    "question": "What is Euclidean distance?",
+    "answer": "Straight-line distance between points in space",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of wal_compression?",
+    "answer": "Compresses WAL records",
+    "explanation": ""
+  },
+  {
+    "question": "What is the ollama Python package version?",
+    "answer": "Check with ollama.__version__",
+    "explanation": ""
+  },
+  {
+    "question": "What is a window function?",
+    "answer": "Function that operates on a window of rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of hstore extension?",
+    "answer": "Key-value store within PostgreSQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of full_page_writes?",
+    "answer": "Writes full pages after checkpoint",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of effective_cache_size?",
+    "answer": "Planner's estimate of available cache",
+    "explanation": ""
+  },
+  {
+    "question": "What is the recommended maintenance_work_mem for index building?",
+    "answer": "At least 256MB, preferably 512MB-1GB",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between text and varchar in PostgreSQL?",
+    "answer": "text is unlimited length; varchar(n) has limit",
+    "explanation": ""
+  },
+  {
+    "question": "What is cross-encoder?",
+    "answer": "Model that processes query and document together",
+    "explanation": ""
+  },
+  {
+    "question": "What is Point-In-Time Recovery (PITR)?",
+    "answer": "Restoring database to specific moment",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of write-ahead logging (WAL)?",
+    "answer": "Ensures durability and enables recovery",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between function calling and tool use?",
+    "answer": "Same concept - allowing models to call external functions",
+    "explanation": ""
+  },
+  {
+    "question": "What is an Agent in pydantic-ai?",
+    "answer": "A class that manages LLM interactions with typed inputs/outputs",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of idle_in_transaction_session_timeout?",
+    "answer": "Max time for idle transaction",
+    "explanation": ""
+  },
+  {
+    "question": "What is Jaccard similarity?",
+    "answer": "Size of intersection divided by size of union of sets",
+    "explanation": ""
+  },
+  {
+    "question": "What is a PRIMARY KEY constraint?",
+    "answer": "Uniquely identifies each row in a table",
+    "explanation": ""
+  },
+  {
+    "question": "What is iterative scan mode in pgvector?",
+    "answer": "A setting for filtered queries that improves performance",
+    "explanation": ""
+  },
+  {
+    "question": "What is the advantage of bi-encoders over cross-encoders?",
+    "answer": "Bi-encoders can pre-compute document embeddings",
+    "explanation": ""
+  },
+  {
+    "question": "What is the current_status property in pydantic-ai?",
+    "answer": "Tracks the state of agent execution (running, complete, failed)",
+    "explanation": ""
+  },
+  {
+    "question": "What is embedding quantization?",
+    "answer": "Reducing precision of vectors to save memory",
+    "explanation": ""
+  },
+  {
+    "question": "What is the bit(n) data type in pgvector?",
+    "answer": "Binary vectors for Hamming and Jaccard distance operations",
+    "explanation": ""
+  },
+  {
+    "question": "What is mean reciprocal rank?",
+    "answer": "1/rank of first correct result (higher = better)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of log_min_duration_statement?",
+    "answer": "Logs queries exceeding this duration",
+    "explanation": ""
+  },
+  {
+    "question": "What is the RunResult class in pydantic-ai?",
+    "answer": "Contains the LLM's text response and any structured data",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of REINDEX?",
+    "answer": "Rebuilds corrupted or fragmented indexes",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of pg_stat_user_functions view?",
+    "answer": "Shows function execution statistics",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of EXPLAIN ANALYZE?",
+    "answer": "Shows actual execution time and plan",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between greedy and stochastic decoding?",
+    "answer": "Greedy picks highest prob token; stochastic samples from distribution",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between text() and SQL() in SQLAlchemy?",
+    "answer": "text() for raw SQL; SQL() for composable SQL",
+    "explanation": ""
+  },
+  {
+    "question": "What is the main App class in Textual?",
+    "answer": "Base class for TUI applications",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of unnest function?",
+    "answer": "Expands array into rows",
+    "explanation": ""
+  },
+  {
+    "question": "What is psycopg3 vs psycopg2?",
+    "answer": "psycopg3 supports async and more modern Python features",
+    "explanation": ""
+  },
+  {
+    "question": "What is Textual?",
+    "answer": "A Python TUI framework for building terminal applications",
+    "explanation": ""
+  },
+  {
+    "question": "What is the inner product operator in pgvector?",
+    "answer": "<#> (negative inner product; use -embedding <#> query for actual inner product)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of array_agg function?",
+    "answer": "Aggregates values into an array",
+    "explanation": ""
+  },
+  {
+    "question": "What is a NATURAL JOIN?",
+    "answer": "Joins tables on columns with same name and type",
+    "explanation": ""
+  },
+  {
+    "question": "What is the copy_records_to_table method in asyncpg?",
+    "answer": "Efficient bulk copy of records to table",
+    "explanation": ""
+  },
+  {
+    "question": "How do you handle button clicks in Textual?",
+    "answer": "on_button_pressed event handler",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between uv and pip?",
+    "answer": "uv is 10-100x faster and has modern dependency resolution",
+    "explanation": ""
+  },
+  {
+    "question": "What is a NOT NULL constraint?",
+    "answer": "Ensures column cannot have NULL values",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between Seq Scan and Index Scan?",
+    "answer": "Seq Scan reads all rows; Index Scan reads only indexed rows",
+    "explanation": ""
+  },
+  {
+    "question": "How do you define a system prompt in pydantic-ai?",
+    "answer": "Pass 'system_prompt' parameter to Agent or use @agent.system_prompt decorator",
+    "explanation": ""
+  },
+  {
+    "question": "How do you authenticate with OpenRouter?",
+    "answer": "Bearer token in Authorization header",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of JSONB in PostgreSQL?",
+    "answer": "Binary format for JSON data with indexing support",
+    "explanation": ""
+  },
+  {
+    "question": "How do you connect with psycopg2?",
+    "answer": "conn = psycopg2.connect('postgresql://user:pass@host/db')",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of checkpoint?",
+    "answer": "Writes dirty pages to disk",
+    "explanation": ""
+  },
+  {
+    "question": "What is index replication?",
+    "answer": "Copying index across machines for redundancy",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of hybrid search?",
+    "answer": "Combining multiple retrieval methods",
+    "explanation": ""
+  },
+  {
+    "question": "What is cosine similarity?",
+    "answer": "Measure of angle between vectors (1 = identical, 0 = orthogonal, -1 = opposite)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between exact and approximate nearest neighbor search?",
+    "answer": "Exact returns perfect recall but is slow; approximate (HNSW/IVFFlat) is faster with some recall loss",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create an async engine in SQLAlchemy?",
+    "answer": "create_async_engine('postgresql+asyncpg://...')",
+    "explanation": ""
+  },
+  {
+    "question": "What is system_prompt in pydantic-ai?",
+    "answer": "A decorator or parameter that sets the AI's behavior instructions",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of result_type in agent.run()?",
+    "answer": "Specifies Pydantic model for structured output",
+    "explanation": ""
+  },
+  {
+    "question": "How does pgvector store vector data internally?",
+    "answer": "In a custom, memory-efficient binary format",
+    "explanation": ""
+  },
+  {
+    "question": "What is tokenization?",
+    "answer": "Breaking text into smaller units (tokens) that models can process",
+    "explanation": ""
+  },
+  {
+    "question": "What company maintains pydantic-ai?",
+    "answer": "Pydantic (makers of Pydantic validation)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between BEFORE and AFTER triggers?",
+    "answer": "BEFORE runs before operation; AFTER runs after",
+    "explanation": ""
+  },
+  {
+    "question": "What is a composite key?",
+    "answer": "Primary key made of multiple columns",
+    "explanation": ""
+  },
+  {
+    "question": "What is mean pooling in embeddings?",
+    "answer": "Averaging token embeddings to get sentence-level representation",
+    "explanation": ""
+  },
+  {
+    "question": "What is PCA?",
+    "answer": "Principal Component Analysis - linear dimensionality reduction",
+    "explanation": ""
+  },
+  {
+    "question": "What is a Binding in Textual?",
+    "answer": "Keyboard shortcut mapping",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between cost and time in EXPLAIN?",
+    "answer": "Cost is estimated work; time is actual execution",
+    "explanation": ""
+  },
+  {
+    "question": "What is the difference between UNNEST and EXPLODE?",
+    "answer": "PostgreSQL uses UNNEST; Spark uses EXPLODE",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of archive_mode?",
+    "answer": "Enables WAL archiving for backup",
+    "explanation": ""
+  },
+  {
+    "question": "What is a CROSS JOIN?",
+    "answer": "Returns Cartesian product of two tables",
+    "explanation": ""
+  },
+  {
+    "question": "What is the pgvector extension written in?",
+    "answer": "C (for performance)",
+    "explanation": ""
+  },
+  {
+    "question": "What is the purpose of OFFSET in SQL?",
+    "answer": "Skips rows before returning results",
+    "explanation": ""
+  },
+  {
+    "question": "How do you create a structured output with pydantic-ai?",
+    "answer": "Define a Pydantic model and pass it to result_type parameter",
+    "explanation": ""
+  }
+]

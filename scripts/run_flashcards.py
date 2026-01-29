@@ -6,7 +6,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+from vectordb_learn.logging import setup_logging
 from vectordb_learn.flashcards.main import run_flashcards
+
+setup_logging()
 
 
 if __name__ == "__main__":

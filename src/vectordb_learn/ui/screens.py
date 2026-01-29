@@ -1,9 +1,17 @@
 """Textual screens for the vector database learner."""
 
+import asyncio
 from textual.app import ComposeResult
 from textual.containers import Container, Vertical, Horizontal
 from textual.screen import Screen
 from textual.widgets import Button, Input, Static, Label, Log
+
+from ..db.operations import (
+    search_similar, create_hnsw_index,
+    create_ivfflat_index, drop_indexes, explain_query, get_schema_stats, create_schema
+)
+from ..embedding.ollama import get_embedding
+from ..csv.loader import load_csv
 
 
 class HomeScreen(Screen):
@@ -32,17 +40,17 @@ class HomeScreen(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         button_id = event.button.id
         if button_id == "ingest":
-            self.app.push_screen("IngestScreen()")
+            self.app.push_screen("ingest")
         elif button_id == "search":
-            self.app.push_screen("SearchScreen()")
+            self.app.push_screen("search")
         elif button_id == "explain":
-            self.app.push_screen("ExplainScreen()")
+            self.app.push_screen("explain")
         elif button_id == "indexes":
-            self.app.push_screen("IndexScreen()")
+            self.app.push_screen("indexes")
         elif button_id == "playground":
-            self.app.push_screen("PlaygroundScreen()")
+            self.app.push_screen("playground")
         elif button_id == "metrics":
-            self.app.push_screen("MetricsScreen()")
+            self.app.push_screen("metrics")
         elif button_id == "quit":
             self.app.exit()
 
@@ -77,6 +85,36 @@ class SearchScreen(Screen):
         elif event.button.id == "clear":
             self.query_one("#search_query", Input).value = ""
             self.query_one("#results", Static).update("Results will appear here...")
+        elif event.button.id == "do_search":
+            query = self.query_one("#search_query", Input).value
+            if query:
+                async def run_search():
+                    try:
+                        self.query_one("#results", Static).update("Generating embedding...")
+                        self.query_one("#explanation", Static).update("Generating embedding via Ollama...")
+                        embedding = await get_embedding(query)
+                        self.query_one("#results", Static).update("Searching...")
+                        self.query_one("#explanation", Static).update(f"Searching with cosine distance (<=>)...\nQuery: {query[:50]}...\nEmbedding dim: {len(embedding)}")
+                        results = await search_similar(self.app.pool, embedding, limit=10)
+                        if results:
+                            lines = ["Results:"]
+                            for r in results:
+                                preview = r.get('session_content', '')[:80].replace('\n', ' ')
+                                lines.append(f"[{r['distance']:.3f}] {r.get('session_title', 'Untitled')[:40]}")
+                                lines.append(f"   {preview}...")
+                                lines.append("")
+                            self.query_one("#results", Static).update("\n".join(lines))
+                            self.query_one("#explanation", Static).update(
+                                f"Searched {len(results)} results using cosine similarity.\n"
+                                f"Distance formula: 1 - cosine_similarity\n"
+                                f"Lower distance = more similar"
+                            )
+                        else:
+                            self.query_one("#results", Static).update("No results found.")
+                    except Exception as e:
+                        self.query_one("#results", Static).update(f"Error: {e}")
+                        self.query_one("#explanation", Static).update(f"Error: {e}")
+                asyncio.create_task(run_search())
 
 
 class IngestScreen(Screen):
@@ -103,19 +141,41 @@ class IngestScreen(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "back":
             self.app.pop_screen()
+        elif event.button.id == "do_ingest":
+            path = self.query_one("#csv_path", Input).value or "data/conversations.csv"
+            async def do_ingest():
+                try:
+                    self.query_one("#progress_log", Log).write_line(f"Ingesting {path}...")
+                    await create_schema(self.app.pool)
+                    count = await load_csv(self.app.pool, path)
+                    self.query_one("#progress_log", Log).write_line(f"Successfully ingested {count} rows!")
+                except Exception as e:
+                    self.query_one("#progress_log", Log).write_line(f"Error: {e}")
+            asyncio.create_task(do_ingest())
 
+
+def get_dummy_embedding() -> str:
+    """Generate a 768-dimensional zero vector for demo queries."""
+    return "[" + ", ".join(["0.1"] * 768) + "]"
 
 class ExplainScreen(Screen):
     """Query explanation screen."""
 
     def compose(self) -> ComposeResult:
+        dummy_vec = get_dummy_embedding()
         yield Container(
             Static("━━━ EXPLAIN QUERY ━━━", classes="section-title"),
             Static("View the actual SQL and execution plan for vector searches.", classes="info"),
+            Static("━ Example Query ━", classes="section-title"),
+            Static(
+                f"SELECT * FROM conversations ORDER BY embedding <=> '{dummy_vec[:50]}...' LIMIT 10",
+                id="example_query",
+                classes="code-area-small",
+            ),
             Horizontal(
-                Button("Explain Cosine", id="explain_cosine", variant="info"),
-                Button("Explain L2", id="explain_l2", variant="info"),
-                Button("Explain Inner", id="explain_inner", variant="info"),
+                Button("Explain Cosine (<=>)", id="explain_cosine", variant="primary"),
+                Button("Explain L2 (<->)", id="explain_l2", variant="primary"),
+                Button("Explain Inner (<#>)", id="explain_inner", variant="primary"),
                 classes="btn-row",
             ),
             Static("━ EXPLAIN ANALYZE Output ━", classes="section-title"),
@@ -131,6 +191,63 @@ class ExplainScreen(Screen):
         if event.button.id == "back":
             self.app.pop_screen()
 
+        elif event.button.id == "explain_cosine":
+            dummy_vec = get_dummy_embedding()
+            self.query_one("#example_query", Static).update(
+                f"SELECT * FROM conversations ORDER BY embedding <=> '{dummy_vec[:50]}...' LIMIT 10"
+            )
+            async def run_explain():
+                try:
+                    result = await explain_query(
+                        self.app.pool,
+                        f"SELECT * FROM conversations ORDER BY embedding <=> '{dummy_vec}' LIMIT 10"
+                    )
+                    if result:
+                        self.query_one("#explain_output", Static).update(str(result))
+                    else:
+                        self.query_one("#explain_output", Static).update("No results returned.")
+                except Exception as e:
+                    self.query_one("#explain_output", Static).update(f"Error running EXPLAIN ANALYZE. Make sure the database is running and has data.\n\nDetails: {e}")
+            asyncio.create_task(run_explain())
+
+        elif event.button.id == "explain_l2":
+            dummy_vec = get_dummy_embedding()
+            self.query_one("#example_query", Static).update(
+                f"SELECT * FROM conversations ORDER BY embedding <-> '{dummy_vec[:50]}...' LIMIT 10"
+            )
+            async def run_explain():
+                try:
+                    result = await explain_query(
+                        self.app.pool,
+                        f"SELECT * FROM conversations ORDER BY embedding <-> '{dummy_vec}' LIMIT 10"
+                    )
+                    if result:
+                        self.query_one("#explain_output", Static).update(str(result))
+                    else:
+                        self.query_one("#explain_output", Static).update("No results returned.")
+                except Exception as e:
+                    self.query_one("#explain_output", Static).update(f"Error running EXPLAIN ANALYZE. Make sure the database is running and has data.\n\nDetails: {e}")
+            asyncio.create_task(run_explain())
+
+        elif event.button.id == "explain_inner":
+            dummy_vec = get_dummy_embedding()
+            self.query_one("#example_query", Static).update(
+                f"SELECT * FROM conversations ORDER BY embedding <#> '{dummy_vec[:50]}...' LIMIT 10"
+            )
+            async def run_explain():
+                try:
+                    result = await explain_query(
+                        self.app.pool,
+                        f"SELECT * FROM conversations ORDER BY embedding <#> '{dummy_vec}' LIMIT 10"
+                    )
+                    if result:
+                        self.query_one("#explain_output", Static).update(str(result))
+                    else:
+                        self.query_one("#explain_output", Static).update("No results returned.")
+                except Exception as e:
+                    self.query_one("#explain_output", Static).update(f"Error running EXPLAIN ANALYZE. Make sure the database is running and has data.\n\nDetails: {e}")
+            asyncio.create_task(run_explain())
+
 
 class IndexScreen(Screen):
     """Index management screen."""
@@ -143,10 +260,11 @@ class IndexScreen(Screen):
                 Button("Create HNSW", id="create_hnsw", variant="success"),
                 Button("Create IVFFlat", id="create_ivfflat", variant="success"),
                 Button("Drop Indexes", id="drop_idx", variant="warning"),
+                Button("Refresh", id="refresh_idx", variant="primary"),
                 classes="btn-row",
             ),
             Static("━ Current Indexes ━", classes="section-title"),
-            Static("Index information will appear here...", id="index_info", classes="info-area"),
+            Static("Loading indexes...", id="index_info", classes="info-area"),
             Horizontal(
                 Button("← Back", id="back", variant="default"),
                 classes="nav-row",
@@ -154,9 +272,58 @@ class IndexScreen(Screen):
             id="indexes",
         )
 
+    async def on_mount(self) -> None:
+        await self.load_indexes()
+
+    async def load_indexes(self) -> None:
+        try:
+            stats = await get_schema_stats(self.app.pool)
+            lines = [f"Total rows: {stats['row_count']}", "", "Indexes:"]
+            if stats['indexes']:
+                for idx in stats['indexes']:
+                    lines.append(f"  • {idx['indexname']} ({idx['size']})")
+            else:
+                lines.append("  No indexes found")
+            self.query_one("#index_info", Static).update("\n".join(lines))
+        except Exception as e:
+            self.query_one("#index_info", Static).update(f"Error loading indexes: {e}")
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "back":
             self.app.pop_screen()
+
+        elif event.button.id == "create_hnsw":
+            async def create_idx():
+                try:
+                    result = await create_hnsw_index(self.app.pool)
+                    self.query_one("#index_info", Static).update(result)
+                    await self.load_indexes()
+                except Exception as e:
+                    self.query_one("#index_info", Static).update(f"Error: {e}")
+            asyncio.create_task(create_idx())
+
+        elif event.button.id == "create_ivfflat":
+            async def create_idx():
+                try:
+                    result = await create_ivfflat_index(self.app.pool)
+                    self.query_one("#index_info", Static).update(result)
+                    await self.load_indexes()
+                except Exception as e:
+                    self.query_one("#index_info", Static).update(f"Error: {e}")
+            asyncio.create_task(create_idx())
+
+        elif event.button.id == "drop_idx":
+            async def drop_idx():
+                try:
+                    result = await drop_indexes(self.app.pool)
+                    self.query_one("#index_info", Static).update(result)
+                    await self.load_indexes()
+                except Exception as e:
+                    self.query_one("#index_info", Static).update(f"Error: {e}")
+            asyncio.create_task(drop_idx())
+
+        elif event.button.id == "refresh_idx":
+            asyncio.create_task(self.load_indexes())
 
 
 class PlaygroundScreen(Screen):
@@ -188,6 +355,18 @@ class PlaygroundScreen(Screen):
             self.app.pop_screen()
         elif event.button.id == "clear_sql":
             self.query_one("#custom_sql", Input).value = ""
+        elif event.button.id == "run_sql":
+            query = self.query_one("#custom_sql", Input).value
+            if query:
+                async def run_q():
+                    try:
+                        async with self.app.pool.acquire() as conn:
+                            rows = await conn.fetch(query)
+                            for r in rows:
+                                self.query_one("#sql_results", Log).write_line(str(dict(r)))
+                    except Exception as e:
+                        self.query_one("#sql_results", Log).write_line(f"Error: {e}")
+                asyncio.create_task(run_q())
 
 
 class MetricsScreen(Screen):

@@ -1,6 +1,7 @@
 """Main TUI application for the Vector Database Learner."""
 
 import asyncio
+import subprocess
 from textual.app import App, ComposeResult
 from textual import events
 from textual.screen import Screen
@@ -17,10 +18,12 @@ from .telemetry import setup_telemetry, get_tracer
 from .logging import setup_logging
 
 
+from pathlib import Path
+
 class VectorDBApp(App):
     """Main application class."""
 
-    CSS_PATH = "src/vectordb_learn/ui/styles.css"
+    CSS_PATH = Path(__file__).parent / "ui" / "styles.css"
 
     BINDINGS = [
         ("f1", "show_help", "Help"),
@@ -29,6 +32,7 @@ class VectorDBApp(App):
         ("q", "quit", "Quit"),
         ("escape", "quit", "Quit"),
         ("ctrl+c", "quit", "Quit"),
+        ("ctrl+shift+c", "copy_selection", "Copy"),
     ]
 
     SCREENS = {
@@ -76,14 +80,30 @@ class VectorDBApp(App):
     def action_toggle_debug(self) -> None:
         """Toggle debug panel visibility."""
         self.debug_visible = not self.debug_visible
-        debug = self.query_one("#debug_panel", DebugPanel)
-        debug.display = self.debug_visible
+        try:
+            debug = self.query_one("#debug_panel", DebugPanel)
+            debug.display = self.debug_visible
+        except Exception:
+            pass
 
     def action_toggle_sql(self) -> None:
         """Toggle SQL view."""
         pass
 
-    def action_quit(self) -> None:
+    def action_copy_selection(self) -> None:
+        """Copy selected text to clipboard using xsel."""
+        try:
+            selection = self.get_clipboard()
+            if selection:
+                subprocess.run(
+                    ["xsel", "--clipboard", "--input"],
+                    input=selection.encode(),
+                    check=True
+                )
+        except (FileNotFoundError, subprocess.CalledProcessError):
+            pass
+
+    async def action_quit(self) -> None:
         """Quit the application."""
         self.exit()
 
